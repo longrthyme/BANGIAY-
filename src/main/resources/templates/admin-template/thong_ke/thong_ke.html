@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>BeeStore Admin</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+  <!-- Favicon -->
+  <link href="/../../img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <style>
+    /* Đổi màu nền và màu chữ của các nút phân trang */
+    .pagination .page-link {
+      color: #000; /* Màu chữ đen */
+      background-color: #e9ecef; /* Nền xám nhạt */
+      border: 1px solid #c8cbcf; /* Viền màu xám nhạt */
+      border-radius: 0; /* Loại bỏ góc bo tròn */
+      margin: 0 2px; /* Điều chỉnh khoảng cách giữa các nút */
+      padding: 6px 12px; /* Điều chỉnh độ lớn của nút */
+    }
+
+    /* Đổi màu nền và màu chữ của nút khi được chọn hoặc hover */
+    .pagination .page-item.active .page-link,
+    .pagination .page-link:hover {
+      color: #000; /* Màu chữ đen khi hover hoặc nút được chọn */
+      background-color: #c8cbcf; /* Màu nền xám nhạt khi hover hoặc nút được chọn */
+      border: 1px solid #c8cbcf; /* Viền màu xám nhạt khi hover hoặc nút được chọn */
+    }
+
+    /* Table Styling */
+    #example {
+      font-family: Arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+      margin: 20px 0;
+      padding-top: 20px;
+    }
+
+    #example th {
+      background-color: #f2f2f2;
+      color: #333;
+      font-weight: bold;
+      border-bottom: 1px solid black;
+      padding: 8px;
+      text-align: center;
+
+    }
+
+    #example td {
+      padding: 8px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+      color: #6a6a6a;
+    }
+
+    #example tbody tr:hover {
+      background-color: #b3e1ff;
+    }
+
+    #example img {
+      vertical-align: middle;
+    }
+
+    /* Hide the footer */
+    tfoot[hidden] {
+      display: none;
+    }
+
+    /* hien thi icon them sửa xóa*/
+    .image-row {
+      display: flex; /* Sử dụng flexbox để xếp ảnh trên cùng một hàng */
+    }
+
+    .modal-body {
+      text-align: left;
+    }
+
+    /* Tùy chỉnh CSS để chuyển "Show entries" sang bên trái */
+    .dataTables_length {
+      float: left;
+    }
+
+    /* Di chuyển chuỗi "Showing x to y of N entries" sang bên trái */
+    .dataTables_info {
+      float: left;
+    }
+
+  </style>
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- Libraries Stylesheet -->
+  <link href="/../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+  <link href="/../../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="/../../css/admin/bootstrap.min.css" rel="stylesheet" />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>
+  <link rel='stylesheet' href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'>
+  <!-- Template Stylesheet -->
+  <link href="/../../css/admin/style.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+  <div class="sidebar pe-4 pb-3">
+    <nav class="navbar bg-light navbar-light">
+      <a th:href="@{/admin/ban-hang}" class="navbar-brand mx-4 mb-3">
+
+        <h3 style="color: orange" ><i class="me-2" ></i>BeeStore </h3>
+      </a>
+      <div class="d-flex align-items-center ms-4 mb-4">
+        <div class="position-relative">
+          <img class="rounded-circle" th:src="@{/img/userNew.png}" alt="" style="width: 40px; height: 40px;">
+          <div
+                  class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+          </div>
+        </div>
+        <div class="ms-3">
+          <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
+
+
+        </div>
+      </div>
+      <div class="navbar-nav w-100">
+        <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
+          Hàng</a>
+        <div class="nav-item dropdown">
+          <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                  class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
+          <div class="dropdown-menu bg-transparent border-0" >
+            <a th:href="@{/admin/san-pham}" class="dropdown-item">Sản Phẩm</a>
+            <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">Chi Tiết Sản
+              Phẩm</a>
+            <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">Nhà Cung Cấp</a>
+            <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">Thương Hiệu</a>
+            <a th:href="@{/admin/mau-sac}" class="dropdown-item"> Màu Sắc</a>
+            <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> Kích Thước</a>
+            <a th:href="@{/admin/de-giay}" class="dropdown-item"> Đế Giày</a>
+
+          </div>
+        </div>
+        <a th:href="@{/admin/hoa-don}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Hóa Đơn</a>
+
+        <div class="nav-item dropdown">
+          <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                  class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
+          <div class="dropdown-menu bg-transparent border-0">
+            <a th:href="@{/admin/khach-hang}"class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+            <a th:href="@{/admin/nhan-vien}"  class="dropdown-item">* Tài Khoản Nhân Viên</a>
+
+
+          </div>
+        </div>
+
+
+        <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
+                class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
+        <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
+                class="fa fa-chart-bar me-2"></i>Thống Kê</a>
+      </div>
+    </nav>
+  </div>
+  <div class="content">
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+
+
+      <div class="navbar-nav align-items-center ms-auto">
+        <div class="fa fa-sign-out"></div>
+        <div class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+            <i class="fa fa-bars"></i>
+
+
+          </a>
+          <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+            <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid pt-4 px-4">
+      <div id="errorMessageDate"></div>
+
+
+
+      <div class="card-body">
+        <!-- Bordered Tabs Justified -->
+        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+          <li class="nav-item flex-fill" role="presentation">
+            <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="true">Thống Kê Doanh Thu</button>
+          </li>
+          <li class="nav-item flex-fill" role="presentation">
+            <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Thống Kê Sản Phẩm </button>
+          </li>
+          <li class="nav-item flex-fill" role="presentation">
+            <button class="nav-link w-100" id="contactt-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contactt" type="button" role="tab" aria-controls="contactt" aria-selected="false">Thống Kê Hóa Đơn</button>
+          </li>
+          <li class="nav-item flex-fill" role="presentation">
+            <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Thống Kê Tài Khoản</button>
+          </li>
+        </ul>
+
+        <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+          <!-- Thống Kê Doanh Thu Tab -->
+          <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="col-sm-6 col-xl-4">
+              <div class="stat-card">
+                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                <div class="ms-3">
+                  <p class="mb-2">Tổng Doanh Thu</p>
+                  <h6 class="mb-0">
+                    <strong class="text-danger" th:text="${#numbers.formatDecimal(doanhThu != null ? doanhThu : 0, 0, 'POINT', 0, 'COMMA') + ' VND'}"></strong>
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-xl-12">
+              <div class="bg-light rounded h-100 p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                  <h5 class="m-0">Biểu Đồ Doanh thu</h5>
+                  <select id="selectType" class="custom-select">
+                    <option value="daily">Ngày</option>
+                    <option value="monthly">Tháng</option>
+                    <option value="yearly">Năm</option>
+                  </select>
+                </div>
+                <canvas id="myChart" style="width: 70%; height: 200px;"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thống Kê Sản Phẩm Tab -->
+          <div class="tab-pane fade" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="col-sm-6 col-xl-4">
+              <div class="stat-card">
+                <i class="fa fa-box fa-3x text-primary"></i>
+                <div class="ms-3">
+                  <p class="mb-2">Tổng Số Sản Phẩm</p>
+                  <h6 class="mb-0">
+                    <strong class="text-danger" th:text="${sanPhamCount}"></strong>
+                  </h6>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-light rounded h-100 p-4">
+              <div id="container2" style="width: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- Thống Kê Hóa Đơn Tab -->
+          <div class="tab-pane fade" id="bordered-justified-contactt" role="tabpanel" aria-labelledby="contactt-tab">
+            <div class="bg-light rounded h-100 p-4">
+              <div id="container3"></div>
+            </div>
+            <h5 class="text-center"><strong>Danh Sách Hoá Đơn</strong></h5>
+            <table id="example" class="table table-striped custom-table">
+              <thead>
+              <tr>
+                <th>STT</th>
+                <th>Mã</th>
+                <th>Tên Khách Hàng</th>
+                <th>Hình Thức Mua Hàng</th>
+                <th>Trạng Thái</th>
+                <th>Thanh Toán</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="hd,state : ${hoadons}">
+                <td>
+                  <a  th:text="${state.index+1}"></a>
+                </td>
+                <td>
+                  <a th:text="${hd.ma}"></a>
+                </td>
+                <td>
+                  <a th:text="${hd.khachHang.ten}"></a>
+                </td>
+                <td>
+                  <a th:text="${hd.loaiHoaDon.getDisplayName()}"></a>
+                </td>
+                <td>
+                  <a  th:text="${hd.trangThai.getDisplayName()}"></a>
+                </td>
+                <td>
+                  <a  th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Thống Kê Tài Khoản Tab -->
+          <div class="tab-pane fade" id="bordered-justified-contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div class="row g-4">
+              <div class="col-sm-6">
+                <div class="stat-card">
+                  <i class="fa fa-users fa-3x text-primary"></i>
+                  <div class="ms-3">
+                    <p class="mb-2">Số Tài Khoản Nhân Viên</p>
+                    <h6 class="text-danger" th:text="${nhanVienCount}"></h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="stat-card">
+                  <i class="fa fa-users fa-3x text-primary"></i>
+                  <div class="ms-3">
+                    <p class="mb-2">Số Tài Khoản Khách Hàng</p>
+                    <h6 class="text-danger" th:text="${khachHangCount}"></h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-light text-center rounded ">
+                <div>
+                  <h3>Danh Sách Nhân Viên</h3>
+                  <div class="bg-light rounded h-100 p-4">
+                    <table id="example" class="table table-striped" >
+                      <thead>
+                      <tr>
+                        <th>Mã</th>
+                        <th>Tên</th>
+                        <th>SĐT</th>
+                        <th>Giới tính</th>
+                        <th>Email</th>
+                        <th>Địa Chỉ</th>
+                        <th>Trạng Thái</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="nhanVien : ${nhanViens}">
+                        <td th:text="${nhanVien.ma}">Ma</td>
+                        <td th:text="${nhanVien.ten}">Ten</td>
+                        <td th:text="${nhanVien.sdt}">Sdt</td>
+                        <td th:text="${nhanVien.gioiTinh ? 'Nam' : 'Nữ'}">Gioi Tinh</td>
+                        <!--                                <td th:text="${#temporals.format(nhanVien.ngayTao, 'yyyy-MM-dd')}"></td>-->
+                        <td th:text="${nhanVien.email}">Email</td>
+                        <td th:text="${nhanVien.diachi}">Địa Chỉ</td>
+                        <!--                                <td th:text="${nhanVien.ngayTao}"></td>-->
+                        <td th:text="${nhanVien.trangThai == 0 ? 'Đang làm' : 'Nghỉ việc'}">Trang Thai</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <p></p>
+              <div class="bg-light text-center rounded ">
+                <div>
+                  <h3>Danh Sách Khách Hàng</h3>
+                  <div class="bg-light rounded h-100 p-4">
+                    <table id="example" class="table table-striped" >
+                      <thead>
+                      <tr>
+                        <th>STT</th>
+                        <th>Mã Khách Hàng</th>
+                        <th>Tên</th>
+                        <th>Giới tính</th>
+                        <th>Ngày sinh</th>
+                        <th>SĐT</th>
+                        <th>Trạng Thái</th>
+
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="khachHang, stat : ${list}">
+                        <td th:text="${stat.index + 1}"></td>
+                        <td th:text="${khachHang.ma}">Mã</td>
+                        <td th:text="${khachHang.ten}">Tên</td>
+                        <td th:text="${khachHang.gioiTinh }">Giới tính</td>
+                        <td th:text="${#dates.format(khachHang.ngaySinh, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${khachHang.sdt}">SĐT</td>
+                        <td th:text="${khachHang.trangThai == 1 ? 'Hoạt Động' : 'KHông Hoạt Động'}">Trạng
+                          Thái
+                        </td>
+
+                      </tr>
+                      </tbody>
+
+
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid pt-4">
+        <div class="bg-light text-center rounded p-4">
+          <div class="bg-light rounded h-100 p-4">
+            <!-- Table Styling -->
+            <style>
+              .custom-table {
+                width: 100%;
+                border-collapse: collapse;
+              }
+
+              .custom-table th,
+              .custom-table td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+              }
+
+              .custom-table th {
+                background-color: #f2f2f2;
+                color: #333;
+              }
+
+              .custom-table tbody tr:nth-child(even) {
+                background-color: #f9f9f9;
+              }
+
+              .custom-table tbody tr:hover {
+                background-color: #e9e9e9;
+              }
+
+              tfoot[hidden] {
+                display: none;
+              }
+
+              .stat-card {
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                padding: 16px;
+                display: flex;
+                align-items: center;
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+              }
+            </style>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/../../lib/chart/chart.min.js"></script>
+<script src="/../../lib/easing/easing.min.js"></script>
+<script src="/../../lib/waypoints/waypoints.min.js"></script>
+<script src="/../../lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<!-- Template Javascript -->
+<script src="/../../js/admin/main.js"></script>
+
+<script th:inline="javascript">
+  <!--  thống kê loại hoá đơn-->
+  var dataForChart = [[${listHd}]] ;
+  var modifiedData = Object.keys(dataForChart).reduce(function (acc, key) {
+    var name = key;
+    if (key === '6') {
+      name = 'Đã Huỷ';
+    } else if (key === '5') {
+      name = 'Hoàn Thành';
+    }else if (key === '4') {
+      name = 'Đang Giao';
+    }
+
+    if (name === 'Đang Giao' || name === 'Hoàn Thành'||name === 'Đã Huỷ') {
+      acc.push({
+        name: name,
+        y: dataForChart[key]
+      });
+    } else {
+      if (acc.some(item => item.name === 'Khác')) {
+        acc.find(item => item.name === 'Khác').y += dataForChart[key];
+      } else {
+        acc.push({
+          name: 'Khác',
+          y: dataForChart[key]
+        });
+      }
+    }
+    return acc;
+  }, []);
+  Highcharts.chart('container3', {
+    chart: {
+      type: 'pie'
+    },
+    title: {
+      text: ' Thống Kê Các loại hoá đơn'
+    },
+    subtitle: {
+      text: 'Số lượng các loại hóa đơn'
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.y}</b>'
+    },
+    plotOptions: {
+      pie: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true,
+          format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+        }
+      }
+    },
+    series: [{
+      name: 'Số lượng',
+      colorByPoint: true,
+      data: modifiedData
+    }]
+  });
+  //
+  var dataForChart1 = [[${listHdct}]];
+  document.addEventListener('DOMContentLoaded', function () {
+    var chart = Highcharts.chart('container2', {
+      // Your Highcharts configuration options here
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        text: 'Các Sản Phẩm Được Bán Nhiều Nhất'
+      },
+      xAxis: {
+        categories: Object.keys(dataForChart1) // Assuming keys are categories/names
+      },
+      yAxis: {
+        title: {
+          text: 'Số Lượng'
+        }
+      },
+      series: [{
+        name: 'Số Lượng',
+        data: Object.entries(dataForChart1).map(([category, value], index) => ({
+          name: category,
+          y: value,
+          color: getColorByIndex(index) // Function to get different colors for each bar
+        }))
+      }]
+    });
+
+    function getColorByIndex(index) {
+      var colors = ['#990000', '#507a50', '#7f7fb1', '#a97c31', '#800080', '#FFFF00'];
+      return colors[index % colors.length];
+    }
+  });
+  //doanh thu
+  var doanhThuMap = [[${listThongKe}]];
+  var labels = [];
+  var data = [];
+  for (var key in doanhThuMap) {
+    if (doanhThuMap.hasOwnProperty(key)) {
+      labels.push(key);
+      data.push(doanhThuMap[key]);
+    }
+  }
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Doanh Thu',
+        data: data,
+        borderColor: 'rgb(41,111,193)',
+        borderWidth: 1,
+        fill: false
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Doanh Thu'
+      }
+    }
+  });
+
+  // Thêm sự kiện người dùng thay đổi selection
+  document.getElementById('selectType').addEventListener('change', function() {
+    var selectedType = this.value;
+    var newData = [];
+    var newLabels = [];
+
+    if (selectedType === 'daily') {
+      newData = data;
+      newLabels = labels;
+    } else if (selectedType === 'monthly') {
+      var monthlyData = {};
+      for (var i = 0; i < labels.length; i++) {
+        var date = new Date(labels[i]);
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        var key = month + '-' + year;
+
+        if (!monthlyData[key]) {
+          monthlyData[key] = 0;
+        }
+
+        monthlyData[key] += data[i];
+      }
+
+      for (var monthKey in monthlyData) {
+        newLabels.push(monthKey);
+        newData.push(monthlyData[monthKey]);
+      }
+    } else if (selectedType === 'yearly') {
+      var yearlyData = {};
+      for (var j = 0; j < labels.length; j++) {
+        var yearLabel = new Date(labels[j]).getFullYear();
+
+        if (!yearlyData[yearLabel]) {
+          yearlyData[yearLabel] = 0;
+        }
+
+        yearlyData[yearLabel] += data[j];
+      }
+
+      for (var yearKey in yearlyData) {
+        newLabels.push(yearKey);
+        newData.push(yearlyData[yearKey]);
+      }
+    }
+
+    myChart.data.labels = newLabels;
+    myChart.data.datasets[0].data = newData;
+    myChart.update();
+  });
+
+</script>
+<script th:inline="javascript">
+  function validateDate() {
+    var startDate = document.getElementById('start7').value;
+    var endDate = document.getElementById('end7').value;
+    var errorMessageDate = document.getElementById('errorMessageDate');
+    if (!endDate) {
+      // Lấy ngày hiện tại dưới dạng chuỗi YYYY-MM-DD
+      var currentDate = new Date().toISOString().split('T')[0];
+      // Gán giá trị mặc định cho endDateElement
+      endDateElement.value = currentDate;
+    }
+    // Lấy ngày hiện tại
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+    var yyyy = today.getFullYear();
+    var currentDate = yyyy + '-' + mm + '-' + dd;
+
+    if (startDate > endDate) {
+      errorMessageDate.innerHTML = '<div class="alert alert-danger" role="alert">Ngày bắt đầu không thể lớn hơn ngày kết thúc.</div>';
+    } else if (startDate > currentDate) {
+      errorMessageDate.innerHTML = '<div class="alert alert-danger" role="alert">Ngày bắt đầu không thể lớn hơn ngày hiện tại.</div>';
+    } else if (endDate > currentDate) {
+      errorMessageDate.innerHTML = '<div class="alert alert-danger" role="alert">Ngày kết thúc không thể lớn hơn ngày hiện tại.</div>';
+    } else {
+      errorMessageDate.innerHTML = ''; // Xóa thông báo lỗi nếu đã được hiển thị
+      return true; // Cho phép form submit nếu không có lỗi
+    }
+
+    // Tự động ẩn thông báo sau 5 giây
+    setTimeout(function () {
+      errorMessageDate.innerHTML = '';
+    }, 5000);
+
+    return false; // Ngăn form từ việc submit khi có lỗi
+  }
+
+  // Function to hide the error message after 5 seconds
+  setTimeout(function() {
+    var errorMessageDate = document.getElementById('errorMessageDate');
+    if (errorMessageDate) {
+      errorMessageDate.innerHTML = '';
+    }
+  }, 5000); // 5000 milliseconds = 5 seconds
+</script>
+<script>
+  new DataTable('#example1');
+  new DataTable('#example2');
+</script>
+<script>
+  $(document).ready(function () {
+    $('#example').DataTable();
+  })
+  $(document).ready(function () {
+    $('#example1').DataTable();
+  })
+</script>
+<script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>
+
+<script>
+
+  });
+
+  // Bắt sự kiện click của nút submit
+  $('form button[type="submit"]').click(function(event) {
+    event.preventDefault(); // Ngăn chặn hành động mặc định của nút submit
+    var form = $(this).closest('form'); // Lấy form gần nhất của nút submit
+
+    // Submit form
+    form.submit();
+  });
+  });
+</script>
+
+
+
+
+
+
+
+</body>
+
+</html>

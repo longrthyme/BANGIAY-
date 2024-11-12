@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>BeeStore Admin</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="" name="keywords"/>
+    <meta content="" name="description"/>
+
+
+
+    <link href="/../../img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon">
+
+    <!--thư viện css tích tìm kiếm-->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'>
+    <!--thư viện css tích tìm kiếm-->
+    <style>
+        /* Đổi màu nền và màu chữ của các nút phân trang */
+        .pagination .page-link {
+            color: #000; /* Màu chữ đen */
+            background-color: #e9ecef; /* Nền xám nhạt */
+            border: 1px solid #c8cbcf; /* Viền màu xám nhạt */
+            border-radius: 0; /* Loại bỏ góc bo tròn */
+            margin: 0 2px; /* Điều chỉnh khoảng cách giữa các nút */
+            padding: 6px 12px; /* Điều chỉnh độ lớn của nút */
+        }
+
+        /* Đổi màu nền và màu chữ của nút khi được chọn hoặc hover */
+        .pagination .page-item.active .page-link,
+        .pagination .page-link:hover {
+            color: #000; /* Màu chữ đen khi hover hoặc nút được chọn */
+            background-color: #c8cbcf; /* Màu nền xám nhạt khi hover hoặc nút được chọn */
+            border: 1px solid #c8cbcf; /* Viền màu xám nhạt khi hover hoặc nút được chọn */
+        }
+
+        /* Table Styling */
+        #example {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            padding-top: 20px;
+        }
+
+        #example th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+            border-bottom: 1px solid black;
+            padding: 8px;
+            text-align: center;
+
+        }
+
+        #example td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            color: #6a6a6a;
+        }
+
+        #example tbody tr:hover {
+            background-color: white;
+        }
+
+        #example img {
+            vertical-align: middle;
+        }
+
+        /* Hide the footer */
+        tfoot[hidden] {
+            display: none;
+        }
+
+        /* Tùy chỉnh CSS để chuyển "Show entries" sang bên trái */
+        .dataTables_length {
+            float: left;
+        }
+
+        /* Di chuyển chuỗi "Showing x to y of N entries" sang bên trái */
+        .dataTables_info {
+            float: left;
+        }
+
+        .btn-link.no-border {
+            border: none;
+            box-shadow: none; /* Optional: Remove box shadow if there is any */
+            background-color: transparent; /* Optional: Set the background to transparent */
+            padding: 0; /* Optional: Remove padding to make the icon fit perfectly */
+        }
+
+    </style>    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"/>
+
+    <!-- Libraries Stylesheet -->
+    <link href="/../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"/>
+    <link href="/../../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/../../css/admin/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Template Stylesheet -->
+    <link href="/../../css/admin/style.css" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+
+    <!-- Sidebar Start -->
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a th:href="@{/admin/ban-hang}" class="navbar-brand mx-4 mb-3">
+
+                <h3 style="color: orange" ><i class="me-2" ></i>BeeStore </h3>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <img class="rounded-circle" th:src="@{/img/userNew.png}" alt="" style="width: 40px; height: 40px;">
+                    <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                    </div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
+
+                </div>
+            </div>
+            <div class="navbar-nav w-100">
+                <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
+                    Hàng</a>
+                <div class="nav-item dropdown">
+                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
+                        <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
+                            Phẩm</a>
+                        <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
+                        <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
+                        <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
+                        <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
+                        <a th:href="@{/admin/de-giay}" class="dropdown-item">* Đế Giày</a>
+
+                    </div>
+                </div>
+                <a th:href="@{/admin/hoa-don}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Hóa Đơn</a>
+
+                <div class="nav-item dropdown">
+                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a th:href="@{/admin/khach-hang}"class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+                        <a th:href="@{/admin/nhan-vien}"  class="dropdown-item">* Tài Khoản Nhân Viên</a>
+
+
+                    </div>
+                </div>
+
+
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
+                        class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
+                <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
+                        class="fa fa-chart-bar me-2"></i>Thống Kê</a>
+            </div>
+        </nav>
+    </div>
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+
+
+            <div class="navbar-nav align-items-center ms-auto">
+                <div class="fa fa-sign-out"></div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-bars"></i>
+
+
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div id="errorMessageDate"></div>
+        <div th:if="${not #strings.isEmpty(err)}" class="error-message">
+            <p  class="alert alert-danger" th:text="${err}"></p>
+        </div>
+        <div th:if="${param.success}">
+            <div class="alert alert-info" id="success-alert">Thành công!</div>
+        </div>
+        <!-- Chart Start -->
+        <div class="container-fluid pt-4">
+            <h6 class="mb-4" style="font-size: 30px;text-align: center">Quản Lý Hóa Đơn</h6>
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/hoa-don">Tất cả</a>
+                </li>
+                <li style="margin-left: 15px" class="nav-item" th:each="tt : ${trangThais}">
+                    <a th:class="'nav-link ' + (${trangThai} == ${tt} ? 'active' : '')"
+                       th:href="@{/admin/hoa-don/trang-thai/{status}(status=${tt})}"
+                       th:text="${tt.getDisplayName()}">
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+
+
+        <form th:action="@{/admin/hoa-don/filter}" method="get" onsubmit="return validateDate()">
+            <div class="container-fluid pt-3">
+                <input type="hidden" id="hiddenTrangThai" name="trangThai" th:value="${trangThai}"/>
+
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <!-- Ngày bắt đầu -->
+                        <label class="sr-only" for="start7">Ngày bắt đầu</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Ngày bắt đầu</div>
+                            </div>
+                            <input type="date" class="form-control" name="startDate" id="start7"
+                                   th:value="${startDate}">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Ngày kết thúc -->
+                        <label class="sr-only" for="end7">Ngày kết thúc</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Ngày kết thúc</div>
+                            </div>
+                            <input type="date" class="form-control" name="endDate" id="end7" th:value="${endDate}">
+                        </div>
+                    </div>
+                    <div class="col-md-2" style="padding-bottom: 5px">
+                        <!-- Button thứ nhất -->
+                        <button type="submit" class="btn btn-outline-info" style="width: 100%"><i class="bi bi-search"></i>Tìm kiếm</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </form>
+
+        <div class="container-fluid pt-4">
+            <div class="bg-light text-center rounded p-4">
+                <div>
+                    <div class="bg-light rounded h-100 p-4">
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã</th>
+                                <th>Hình Thức Mua Hàng</th>
+                                <th>Trạng Thái</th>
+                                <th>Thanh Toán</th>
+                                <th>Thao Tác</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+<!--                            <tr th:each="hd,state : ${hoadons}">-->
+<!--                                <td>-->
+<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"-->
+<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}" th:text="${state.index+1}"-->
+<!--                                       style="color: black;"></a>-->
+<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"-->
+<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}" th:text="${state.index+1}"-->
+<!--                                       style="color: black;"></a>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"-->
+<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}" th:text="${hd.ma}"-->
+<!--                                       style="color: black;"></a>-->
+<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"-->
+<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}" th:text="${hd.ma}"-->
+<!--                                       style="color: black;"></a>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"-->
+<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}"-->
+<!--                                       th:text="${hd.loaiHoaDon.getDisplayName()}"-->
+<!--                                       style="color: black;"></a>-->
+<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"-->
+<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}"-->
+<!--                                       th:text="${hd.loaiHoaDon.getDisplayName()}"-->
+<!--                                       style="color: black;"></a>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"-->
+<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}"-->
+<!--                                       th:text="${hd.trangThai.getDisplayName()}"-->
+<!--                                       style="color: black;"></a>-->
+<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"-->
+<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}"-->
+<!--                                       th:text="${hd.trangThai.getDisplayName()}"-->
+<!--                                       style="color: black;"></a>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"-->
+<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}"-->
+<!--                                       th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"-->
+<!--                                       style="color: black;"></a>-->
+<!--                                    <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"-->
+<!--                                       th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}"-->
+<!--                                       th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"-->
+<!--                                       style="color: black;"></a>-->
+<!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <div style="display: flex; align-items: center;">-->
+<!--                                        <button class="btn btn-outline-success"-->
+<!--                                                data-bs-toggle="modal"-->
+<!--                                                th:data-bs-target="'#ghiChu' + ${hd.id}"-->
+<!--                                                th:disabled="${hd.trangThai ==-->
+<!--            T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).HOAN_THANH}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_TRA_HANG}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_HUY}-->
+<!--            or ${hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE}"-->
+<!--                                                style="margin-right: 10px;">-->
+<!--                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">-->
+<!--                                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"/>-->
+<!--                                            </svg>-->
+<!--                                            Xác nhận-->
+<!--                                        </button>-->
+
+<!--                                        <button class="btn btn-outline-danger"-->
+<!--                                                data-bs-toggle="modal"-->
+<!--                                                th:data-bs-target="'#huyDon' + ${hd.id}"-->
+<!--                                                th:disabled="${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).HOAN_THANH}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_TRA_HANG}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DANG_GIAO}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DANG_CHUAN_BI}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_GIAO}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}-->
+<!--            or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_HUY}-->
+<!--            or ${hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE}"-->
+<!--                                                style="margin-left: 3px;">-->
+<!--                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">-->
+<!--                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>-->
+<!--                                            </svg>-->
+<!--                                            Huỷ-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="modal fade" th:id="'ghiChu' + ${hd.id}"-->
+<!--                                         data-bs-backdrop="static" data-bs-keyboard="false"-->
+<!--                                         tabindex="-1"-->
+<!--                                         aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--                                        <div class="modal-dialog modal-dialog-centered">-->
+<!--                                            <div class="modal-content">-->
+<!--                                                <form th:action="@{/admin/hoa-don/validation}" method="post"-->
+<!--                                                      class="my-form reduced-height">-->
+<!--                                                    &lt;!&ndash;                                                      onsubmit="return checkTrong(this);"&ndash;&gt;-->
+<!--                                                    <div class="modal-header">-->
+<!--                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Chuyển Trạng Thái Đơn Hàng</h1>-->
+<!--                                                        <button type="button" class="btn-close"-->
+<!--                                                                data-bs-dismiss="modal"-->
+<!--                                                                aria-label="Close"></button>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="modal-body">-->
+<!--                                                        <input type="hidden" name="id" th:value="${hd.id}"/>-->
+
+<!--                                                        <input type="text" class="form-control mb-3" name="id"-->
+<!--                                                               th:value="${hd.ghiChu}" readonly/>-->
+
+
+<!--                                                        <label class="form-label">Ghi chú</label>-->
+<!--                                                        <input type="text" class="form-control mb-3" name="ghiChu"-->
+<!--                                                               th:value="${ghiChu}"/>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="modal-footer">-->
+<!--                                                        <button type="button" class="btn btn-danger"-->
+<!--                                                                data-bs-dismiss="modal">Đóng-->
+<!--                                                        </button>-->
+<!--                                                        <button type="submit" class="btn btn-primary">Chuyển Trạng Thái</button>-->
+<!--                                                    </div>-->
+<!--                                                </form>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="modal fade" th:id="'huyDon' + ${hd.id}"-->
+<!--                                         data-bs-backdrop="static" data-bs-keyboard="false"-->
+<!--                                         tabindex="-1"-->
+<!--                                         aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--                                        <div class="modal-dialog modal-dialog-centered">-->
+<!--                                            <div class="modal-content">-->
+<!--                                                <form th:action="@{/admin/hoa-don/validation/deny}" method="post"-->
+<!--                                                      class="my-form reduced-height">-->
+<!--                                                    &lt;!&ndash;                                                      onsubmit="return checkTrong(this);"&ndash;&gt;-->
+<!--                                                    <div class="modal-header">-->
+<!--                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Huỷ Đơn Hàng</h1>-->
+<!--                                                        <button type="button" class="btn-close"-->
+<!--                                                                data-bs-dismiss="modal"-->
+<!--                                                                aria-label="Close"></button>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="modal-body">-->
+<!--                                                        <input type="hidden" name="id" th:value="${hd.id}"/>-->
+<!--                                                        <input type="text" class="form-control mb-3" name="id"-->
+<!--                                                               th:value="${hd.ghiChu}" readonly/>-->
+<!--                                                        <label class="form-label">Lý Do Huỷ Đơn Hàng</label>-->
+<!--                                                        <input type="text" class="form-control mb-3" name="ghiChu"-->
+<!--                                                               th:value="${ghiChu}"/>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="modal-footer">-->
+<!--                                                        <button type="button" class="btn btn-danger"-->
+<!--                                                                data-bs-dismiss="modal">Đóng-->
+<!--                                                        </button>-->
+<!--                                                        <button type="submit" class="btn btn-primary">Huỷ Đơn</button>-->
+<!--                                                    </div>-->
+<!--                                                </form>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<tr th:each="hd,state : ${hoadons}">
+    <td>
+        <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
+           th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}" th:text="${state.index+1}"
+           style="color: black;"></a>
+        <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
+           th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}" th:text="${state.index+1}"
+           style="color: black;"></a>
+    </td>
+    <td>
+        <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
+           th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}" th:text="${hd.ma}"
+           style="color: black;"></a>
+        <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
+           th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}" th:text="${hd.ma}"
+           style="color: black;"></a>
+    </td>
+    <td>
+        <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
+           th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}"
+           th:text="${hd.loaiHoaDon.getDisplayName()}"
+           style="color: black;"></a>
+        <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
+           th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}"
+           th:text="${hd.loaiHoaDon.getDisplayName()}"
+           style="color: black;"></a>
+    </td>
+    <td>
+        <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
+           th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}"
+           th:text="${hd.trangThai.getDisplayName()}"
+           style="color: black;"></a>
+        <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
+           th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}"
+           th:text="${hd.trangThai.getDisplayName()}"
+           style="color: black;"></a>
+    </td>
+    <td>
+        <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_OFFLINE)}"
+           th:href="@{'/admin/hoa-don/chi-tiet-hoa-don/' + ${hd.id}}"
+           th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"
+           style="color: black;"></a>
+        <a th:if="${(hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE)}"
+           th:href="@{'/admin/hoa-don/chi-tiet-gio-hang/' + ${hd.id}}"
+           th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"
+           style="color: black;"></a>
+    </td>
+    <td>
+        <div style="display: flex; align-items: center;">
+            <button class="btn btn-outline-success"
+                    th:if="${hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE}"
+                    data-bs-toggle="modal"
+                    th:data-bs-target="'#ghiChu' + ${hd.id}"
+                    th:disabled="${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).HOAN_THANH}
+                or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_TRA_HANG}
+                or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG}
+                or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}
+                or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_HUY}"
+                    style="margin-right: 10px;">
+
+                Xác nhận
+            </button>
+<!--c           làm mờ nút hủy đơn hàng đối với các trạng thái trên -->
+            <button class="btn btn-outline-danger"
+                    th:if="${hd.loaiHoaDon == T(com.example.datnsum24sd01.enumation.LoaiHoaDon).HOA_DON_ONLINE}"
+                    data-bs-toggle="modal"
+                    th:data-bs-target="'#huyDon' + ${hd.id}"
+                    th:disabled="${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).HOAN_THANH}
+                or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_TRA_HANG}
+                or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DANG_GIAO}
+                or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_GIAO}
+                or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG}
+                or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DOI_HANG}
+                or ${hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_HUY}"
+                    style="margin-left: 3px;">
+
+                Huỷ Đơn
+            </button>
+
+        </div>
+                                            <div class="modal fade" th:id="'ghiChu' + ${hd.id}"
+                                                 data-bs-backdrop="static" data-bs-keyboard="false"
+                                                 tabindex="-1"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <form th:action="@{/admin/hoa-don/validation}" method="post"
+                                                              class="my-form reduced-height">
+                                                            <!--                                                      onsubmit="return checkTrong(this);"-->
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Trạng Thái Đơn Hàng</h1>
+                                                                <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="id" th:value="${hd.id}"/>
+                                                                <label class="form-label">Ghi chú trước</label>
+                                                                <input type="text" class="form-control mb-3" name="id"
+                                                                       th:value="${hd.ghiChu}" readonly/>
+
+
+                                                                <label class="form-label">Ghi chú</label>
+                                                                <input type="text" class="form-control mb-3" name="ghiChu"
+                                                                       th:value="${ghiChu}"/>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger"
+                                                                        data-bs-dismiss="modal">Đóng
+                                                                </button>
+                                                                <button type="submit" class="btn btn-primary">Xác Nhận</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+        <div class="modal fade" th:id="'huyDon' + ${hd.id}"
+             data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form th:action="@{/admin/hoa-don/validation/deny}" method="post" class="my-form reduced-height">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Huỷ Đơn Hàng</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" th:value="${hd.id}"/>
+                            <input type="text" class="form-control mb-3" name="id"
+                                   th:value="${hd.ghiChu}" readonly/>
+                            <label class="form-label">Lý Do Huỷ Đơn Hàng</label>
+                            <input type="text" class="form-control mb-3" name="ghiChu"
+                                   th:value="${ghiChu}"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Huỷ Đơn</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </td>
+</tr>
+
+                            </tbody>
+                            <tfoot hidden="hidden">
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã</th>
+                                <th>Ngày Tạo</th>
+                                <th>Trạng Thái</th>
+                                <th>Thanh Toán</th>
+                                <th>Action</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            new DataTable('#example');
+        </script>
+        <script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+        <script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>
+        <script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable();
+            })
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/../../lib/chart/chart.min.js"></script>
+        <script src="/../../lib/easing/easing.min.js"></script>
+        <script src="/../../lib/waypoints/waypoints.min.js"></script>
+        <script src="/../../lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="/../../lib/tempusdominus/js/moment.min.js"></script>
+        <script src="/../../lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="/../../js/admin/main.js"></script>
+        <script src="/js/admin/index_form.js"></script>
+        <script>
+            function setHiddenValue(value) {
+                document.getElementById('hiddenTrangThai').value = value;
+            }
+        </script>
+        <script type="text/javascript">
+            var selectButton = document.getElementById('selectButton');
+            selectButton.addEventListener('click', function () {
+                // Lấy tham chiếu đến các phần tử trong modal
+                var modal = document.getElementById('myModal');
+                var closeButton = modal.querySelector('.btn-close');
+                var customerButtons = modal.querySelectorAll('.btn-outline-primary');
+
+                // Lắng nghe sự kiện click vào nút "Đóng" trong modal
+                closeButton.addEventListener('click', function () {
+                    modal.style.display = 'none';
+                });
+
+                // Lắng nghe sự kiện click vào từng nút "Thêm" trong modal
+                customerButtons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        // Thực hiện các hành động khi chọn khách hàng
+                        var ghiChu = button.getAttribute('data-customer-id'); // Lấy id khách hàng từ thuộc tính data-customer-id của nút
+                        var customerName = button.getAttribute('data-customer-name'); // Lấy tên khách hàng từ thuộc tính data-customer-name của nút
+
+                    });
+                });
+
+                customerButtons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        var huyDon = button.getAttribute('data-customer-id'); // Lấy id khách hàng từ thuộc tính data-customer-id của nút
+                        var customerName = button.getAttribute('data-customer-name'); // Lấy tên khách hàng từ thuộc tính data-customer-name của nút
+
+                    });
+                });
+
+                // Hiển thị modal
+                modal.style.display = 'block';
+            });
+
+        </script>
+        <script th:inline="javascript">
+            function validateDate() {
+                var startDate = document.getElementById('start7').value;
+                var endDate = document.getElementById('end7').value;
+                var errorMessageDate = document.getElementById('errorMessageDate');
+                if (!endDate) {
+                    // Lấy ngày hiện tại dưới dạng chuỗi YYYY-MM-DD
+                    var currentDate = new Date().toISOString().split('T')[0];
+                    // Gán giá trị mặc định cho endDateElement
+                    endDateElement.value = currentDate;
+                }
+                // Lấy ngày hiện tại
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+                var yyyy = today.getFullYear();
+                var currentDate = yyyy + '-' + mm + '-' + dd;
+
+                if (startDate > endDate) {
+                    errorMessageDate.innerHTML = '<div class="alert alert-danger" role="alert">Ngày bắt đầu không thể lớn hơn ngày kết thúc.</div>';
+                } else if (startDate > currentDate) {
+                    errorMessageDate.innerHTML = '<div class="alert alert-danger" role="alert">Ngày bắt đầu không thể lớn hơn ngày hiện tại.</div>';
+                } else if (endDate > currentDate) {
+                    errorMessageDate.innerHTML = '<div class="alert alert-danger" role="alert">Ngày kết thúc không thể lớn hơn ngày hiện tại.</div>';
+                } else {
+                    errorMessageDate.innerHTML = ''; // Xóa thông báo lỗi nếu đã được hiển thị
+                    return true; // Cho phép form submit nếu không có lỗi
+                }
+
+                // Tự động ẩn thông báo sau 5 giây
+                setTimeout(function () {
+                    errorMessageDate.innerHTML = '';
+                }, 5000);
+
+                return false; // Ngăn form từ việc submit khi có lỗi
+            }
+
+            // Function to hide the error message after 5 seconds
+            setTimeout(function() {
+                var errorMessageDate = document.getElementById('errorMessageDate');
+                if (errorMessageDate) {
+                    errorMessageDate.innerHTML = '';
+                }
+            }, 5000); // 5000 milliseconds = 5 seconds
+        </script>
+
+</body>
+
+</html>

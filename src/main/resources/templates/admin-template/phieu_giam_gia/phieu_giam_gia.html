@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>BeeStore Admin</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <link href="/../../img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon">
+    <!--thư viện css tích tìm kiếm-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'>
+
+
+    <style>
+
+        /* Đổi màu nền và màu chữ của các nút phân trang */
+        .pagination .page-link {
+            color: #000; /* Màu chữ đen */
+            background-color: #e9ecef; /* Nền xám nhạt */
+            border: 1px solid #c8cbcf; /* Viền màu xám nhạt */
+            border-radius: 0; /* Loại bỏ góc bo tròn */
+            margin: 0 2px; /* Điều chỉnh khoảng cách giữa các nút */
+            padding: 6px 12px; /* Điều chỉnh độ lớn của nút */
+        }
+
+        /* Đổi màu nền và màu chữ của nút khi được chọn hoặc hover */
+        .pagination .page-item.active .page-link,
+        .pagination .page-link:hover {
+            color: #000; /* Màu chữ đen khi hover hoặc nút được chọn */
+            background-color: #c8cbcf; /* Màu nền xám nhạt khi hover hoặc nút được chọn */
+            border: 1px solid #c8cbcf; /* Viền màu xám nhạt khi hover hoặc nút được chọn */
+        }
+
+        /* Table Styling */
+        #example {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            padding-top: 20px;
+        }
+
+        #example th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+            border-bottom: 1px solid black;
+            padding: 5px;
+            width: 100px;
+            text-align: center;
+
+        }
+
+        #example td {
+            width: 100px;
+            padding: 5px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            color: #6a6a6a;
+        }
+
+        #example tbody tr:hover {
+            background-color: #b3e1ff;
+        }
+
+        #example img {
+            vertical-align: middle;
+        }
+
+        /* Hide the footer */
+        tfoot[hidden] {
+            display: none;
+        }
+
+        /* Tùy chỉnh CSS để chuyển "Show entries" sang bên trái */
+        .dataTables_length {
+            float: left;
+        }
+
+        /* Di chuyển chuỗi "Showing x to y of N entries" sang bên trái */
+        .dataTables_info {
+            float: left;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .table-custom {
+            width: 100%;
+            table-layout: fixed; /* Đảm bảo rằng các cột sẽ có chiều rộng cố định */
+        }
+
+        .table-custom th, .table-custom td {
+            padding: 10px;
+            text-align: left;
+            word-wrap: break-word; /* Giúp ngắt từ nếu quá dài */
+        }
+
+
+    </style>
+    <!-- Favicon -->
+    <link href="../../images/" rel="icon">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../../css/admin/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="../../css/admin/style.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a th:href="@{/admin/ban-hang}" class="navbar-brand mx-4 mb-3">
+
+                <h3 style="color: orange"><i class="me-2"></i>BeeStore </h3>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <img class="rounded-circle" th:src="@{/img/userNew.png}" alt="" style="width: 40px; height: 40px;">
+                    <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                    </div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
+
+
+                </div>
+            </div>
+            <div class="navbar-nav w-100">
+                <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
+                    Hàng</a>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
+                        <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
+                            Phẩm</a>
+                        <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
+
+                        <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
+                        <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
+                        <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
+                        <a th:href="@{/admin/de-giay}" class="dropdown-item">* Đế Giày</a>
+
+                    </div>
+                </div>
+                <a th:href="@{/admin/hoa-don}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Hóa Đơn</a>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a th:href="@{/admin/khach-hang}" class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+                        <a th:href="@{/admin/nhan-vien}" class="dropdown-item">* Tài Khoản Nhân Viên</a>
+
+
+                    </div>
+                </div>
+
+
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
+                        class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
+                <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
+                        class="fa fa-chart-bar me-2"></i>Thống Kê</a>
+            </div>
+        </nav>
+    </div>
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+
+
+            <div class="navbar-nav align-items-center ms-auto">
+                <div class="fa fa-sign-out"></div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-bars"></i>
+
+
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <div >
+            <div class="row -2">
+                <div style="width: 90%;">
+                    <h6 class="mb-4" style="font-size: 40px;text-align: center">Quản Lý Phiếu Giảm Giá</h6>
+                </div>
+
+                <div/>
+
+                <div>
+
+                    <!-- Default Tabs -->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                                    type="button" role="tab" aria-controls="home" aria-selected="true">Thêm Phiếu giảm
+                                giá
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                    type="button" role="tab" aria-controls="profile" aria-selected="false">Tìm Kiếm Nâng
+                                Cao
+                            </button>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content pt-2" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <p></p>
+                            <div style="width: 20%;">
+                                <button   class="btn btn-outline-primary">
+                                    <a class="them" th:href="@{/admin/phieu-giam-gia/view-add}" style="color: black;">Thêm
+                                        Phiếu Giảm Giá</a>
+                                </button>
+                            </div>
+
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row g-2">
+                                    <form th:action="@{/admin/phieu-giam-gia/filter}" method="get"
+                                          onsubmit="return validateDate()">
+                                        <div class="container-fluid pt-3">
+                                            <input type="hidden" id="hiddenTrangThai" name="trangThai"
+                                                   th:value="${trangThai}"/>
+                                            <div class="row g-2">
+                                                <div class="col-md-4">
+                                                    <!-- Ngày bắt đầu -->
+                                                    <label class="sr-only" for="start7">Ngày bắt đầu</label>
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Ngày bắt đầu</div>
+                                                        </div>
+                                                        <input type="date" class="form-control" name="startDate"
+                                                               id="start7"
+                                                               th:value="${startDate}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <!-- Ngày kết thúc -->
+                                                    <label class="sr-only" for="end7">Ngày kết thúc</label>
+                                                    <div class="input-group mb-2">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">Ngày kết thúc</div>
+                                                        </div>
+                                                        <input type="date" class="form-control" name="endDate" id="end7"
+                                                               th:value="${endDate}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <!-- Button thứ nhất -->
+                                                    <button type="submit" class="btn btn-outline-primary" style="width: 100%"><i
+                                                            class="bi bi-search"></i>Tìm Kiếm
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <p></p>
+
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item" th:each="tt : ${listTrangThai}">
+                                        <button th:class="'nav-link ' + (${trangThai} == ${tt} ? 'active' : '')" id="nav-home-tab"
+                                                data-bs-toggle="tab" type="button" onclick="setHiddenValue('${tt}')">
+                                            <a th:href="@{/admin/phieu-giam-gia/trang-thai/{status}(status=${tt})}"
+                                               th:text="${tt.getDisplayName()}"></a>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-container">
+
+            <table id="example" class="table table-striped" style="width:100%">
+                <thead>
+                <tr>
+
+                    <th>Mã</th>
+                    <th>Tên</th>
+                    <th>Mức giảm</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Áp dụng từ</th>
+                    <th style="width: 25px">Số lượng</th>
+                    <th>Trạng thái</th>
+                    <th style="width: 50px">Thao Tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pgg, state : ${listMaGiam}">
+
+                    <td style="width: 25px" th:text="${pgg.ma}"></td>
+                    <td th:text="${pgg.ten}"></td>
+                    <td style="width: 25px" th:text="${pgg.mucGiamGia + '%'}"></td>
+                    <td th:text="${pgg.ngayBatDau}"></td>
+                    <td th:text="${pgg.ngayKetThuc}"></td>
+                    <td th:text="${#numbers.formatDecimal(pgg.giaTriDonHang, 0, 'POINT', 0, 'COMMA') + ' VND'}"></td>
+                    <td style="width: 25px" th:text="${pgg.soLuong}"></td>
+
+                    <td  >
+    <span th:text="${pgg.trangThai.getDisplayName()}"
+          th:style="'background-color: ' + ${pgg.trangThai.getColor()}
+                    + ';color:white;padding: 3px; border-radius: 8px; display: inline-block;'">
+    </span>
+                    </td>
+
+
+                    <td style="width: 50px">
+
+                        <a th:href="@{'/admin/phieu-giam-gia/view-update/' + ${pgg.id}}">
+                            <i class="fa fa-fa fa-eye" style="font-size: 13px"></i>
+                        </a>
+                        <a th:href="@{'/admin/phieu-giam-gia/deletepgg/' + ${pgg.id}}"
+                           onclick="return confirm(' Bạn Chắc Chắn Muốn Xóa Mã Giảm Giá  Này Chứ ?')">
+                            <img src="/../../img/xoa_v2.png" style="width: 25px; padding-right: 5px;">
+                        </a>
+                        <!--                                        <label class="switch">-->
+                        <!--                                            <input type="checkbox"-->
+                        <!--                                                   th:checked="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}"-->
+                        <!--                                                   th:onchange="return confirmToggle(this.checked)"-->
+                        <!--                                                   th:onclick="window.location.href='@{${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') ? '/admin/ma-giam-gia/bat/' + pgg.id : '/admin/ma-giam-gia/huy/' + pgg.id}}'">-->
+                        <!--                                            <span class="slider"></span>-->
+                        <!--                                        </label>-->
+                        <!--                                        </test thử tắt bật bằng 1 nút>-->
+
+                        <!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}"-->
+                        <!--                                           th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"-->
+                        <!--                                           onclick="return confirm('Bạn  Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+                        <!--                                            <i class="	fa fa-toggle-off" style="font-size: 13px;"></i>-->
+                        <!--                                        </a>-->
+                        <!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">-->
+                        <!--                                            <i class="	fa fa-toggle-off" style="font-size: 13px;"></i>-->
+                        <!--                                        </a>-->
+                        <!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}"-->
+                        <!--                                           th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"-->
+                        <!--                                           onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+                        <!--                                            <i class="	fa fa-toggle-on" style="font-size: 13px;"></i>-->
+                        <!--                                        </a>-->
+                        <!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">-->
+                        <!--                                            <i class="	fa fa-toggle-on" style="font-size: 13px;"></i>-->
+                        <!--                                        </a>-->
+
+
+                        <!-- Link to stop the discount coupon if it is not stopped and not upcoming -->
+                        <!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"-->
+                        <!--                                           th:href="@{/admin/ma-giam-gia/huy/{id}(id=${pgg.id})}"-->
+                        <!--                                           onclick="return confirm('Bạn Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+                        <!--                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>-->
+                        <!--                                        </a>-->
+
+                        <!--                                        &lt;!&ndash; Icon indicating the discount coupon is stopped &ndash;&gt;-->
+                        <!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">-->
+                        <!--                                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>-->
+                        <!--                                        </a>-->
+
+                        <!--                                        &lt;!&ndash; Link to start the discount coupon if it is not active and not upcoming &ndash;&gt;-->
+                        <!--                                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"-->
+                        <!--                                           th:href="@{/admin/ma-giam-gia/bat/{id}(id=${pgg.id})}"-->
+                        <!--                                           onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">-->
+                        <!--                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>-->
+                        <!--                                        </a>-->
+
+                        <!--                                        &lt;!&ndash; Icon indicating the discount coupon is active &ndash;&gt;-->
+                        <!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">-->
+                        <!--                                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>-->
+                        <!--                                        </a>-->
+
+                        <!--                                        &lt;!&ndash; Icon indicating the discount coupon is upcoming &ndash;&gt;-->
+                        <!--                                        <a th:if="${pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}">-->
+                        <!--                                            <i class="fa fa-clock-o" style="font-size: 13px;"></i>-->
+                        <!--                                        </a>-->
+                        <!-- Link to stop the discount coupon if it is not stopped and not upcoming -->
+                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"
+                           th:href="@{/admin/phieu-giam-gia/huy/{id}(id=${pgg.id})}"
+                           onclick="return confirm('Bạn Muốn Dừng Hoạt Động Phiếu Giảm Giá Này Không ?')">
+                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>
+                        </a>
+
+                        <!-- Icon indicating the discount coupon is stopped -->
+                        <a th:if="${pgg.trangThai.getDisplayName().equals('Dừng Hoạt Động')}">
+                            <i class="fa fa-toggle-off" style="font-size: 13px;"></i>
+                        </a>
+
+                        <!-- Link to start the discount coupon if it is not active and not upcoming -->
+                        <a th:unless="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra') || pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}"
+                           th:href="@{/admin/phieu-giam-gia/bat/{id}(id=${pgg.id})}"
+                           onclick="return confirm('Bạn Muốn Bật Hoạt Động Phiếu Giảm Giá Này Không ?')">
+                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>
+                        </a>
+
+                        <!-- Icon indicating the discount coupon is active -->
+                        <a th:if="${pgg.trangThai.getDisplayName().equals('Đang Diễn Ra')}">
+                            <i class="fa fa-toggle-on" style="font-size: 13px;"></i>
+                        </a>
+
+                        <!-- Icon indicating the discount coupon is upcoming -->
+                        <a th:if="${pgg.trangThai.getDisplayName().equals('Sắp Diễn Ra')}">
+                            <i class="fa fa-clock-o" style="font-size: 13px;"></i>
+                        </a>
+
+
+                    </td>
+
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Table End -->
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function confirmToggle(isTurningOn) {
+        var message = isTurningOn ? "Bạn có muốn bật hoạt động không?" : "Bạn có muốn tắt hoạt động không?";
+        var result = confirm(message);
+        return result;
+    }
+
+    function updateStatus(isTurningOn) {
+        var url = isTurningOn ? '/admin/ma-giam-gia/bat/' : '/admin/ma-giam-gia/huy/';
+        var id = $('#pggId').val();
+        $.ajax({
+            type: 'GET',
+            url: url + id,
+            success: function (response) {
+                console.log("Trạng thái đã được cập nhật.");
+            },
+            error: function (xhr, status, error) {
+                console.error("Đã xảy ra lỗi khi cập nhật trạng thái: " + error);
+            }
+        });
+    }
+</script>
+
+<script th:inline="javascript">
+    function validateDate() {
+        var startDate = document.getElementById('start7').value;
+        var endDate = document.getElementById('end7').value;
+
+        if (startDate === '' || endDate === '') {
+            document.getElementById('errorMessageDate').innerHTML = '<div class="alert alert-danger" role="alert">Vui lòng điền đầy đủ thông tin tìm kiếm</div>';
+
+
+            setTimeout(function () {
+                document.getElementById('errorMessageDate').innerHTML = '';
+            }, 5000);
+
+            return false;
+        } else if (startDate > endDate) {
+            document.getElementById('errorMessageDate').innerHTML = '<div class="alert alert-danger" role="alert">Ngày bắt đầu không thể lớn hơn ngày kết thúc.</div>';
+
+
+            setTimeout(function () {
+                document.getElementById('errorMessageDate').innerHTML = '';
+            }, 5000);
+
+            return false;
+        } else {
+            document.getElementById('errorMessageDate').innerHTML = '';
+            return true;
+        }
+    }
+</script>
+
+<!--javascrip tim kiem trong form phan trang fill 10 20-->
+<script>
+    new DataTable('#example');
+</script>
+
+<script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    })
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/../../lib/chart/chart.min.js"></script>
+<script src="/../../lib/easing/easing.min.js"></script>
+<script src="/../../lib/waypoints/waypoints.min.js"></script>
+<script src="/../../lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+<script src="/../../js/admin/main.js"></script>
+<script src="/../../js/admin/index_form.js"></script>
+</body>
+</html>

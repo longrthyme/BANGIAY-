@@ -1,0 +1,74 @@
+/* Style the page title */
+.page-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Style the form container */
+.personal-infomation {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+/* Style form labels */
+.personal-infomation label {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Style form inputs */
+.personal-infomation input[type="text"],
+.personal-infomation input[type="email"],
+.personal-infomation input[type="password"],
+.personal-infomation input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+/* Style radio buttons */
+.personal-infomation .radio-box {
+  margin-right: 20px;
+}
+
+/* Style the "Đăng ký" button */
+.personal-infomation .main-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Style the "Đăng ký" button on hover */
+.personal-infomation .main-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Style the "Đăng nhập" box */
+.create-new-account {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+/* Style the "Đăng nhập" button in the "Đăng nhập" box */
+.create-new-account .main-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Style the "Đăng nhập" button on hover in the "Đăng nhập" box */
+.create-new-account .main-btn:hover {
+  background-color: #0056b3;
+}

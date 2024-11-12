@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{customer-template/fragments/fragment :: page_head}">
+</head>
+<body>
+<div th:fragment="menu">
+    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="../images/"
+                     style="height: 50px; width: 50px;">
+                <a class="navbar-brand"
+                   th:href="@{/beestore/trang-chu}">BeeStore<span>.</span></a></a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+                    aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsFurni">
+                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="active">
+                        <a class="nav-link" th:href="@{/beestore/trang-chu}">Trang chủ</a>
+                    </li>
+                    <li><a class="nav-link" th:href="@{/beestore/cua-hang}">Cửa hàng</a></li>
+                    <li><a class="nav-link" th:href="@{/beestore/dich-vu}">Dịch vụ</a></li>
+                    <li><a class="nav-link" th:href="@{/beestore/thong-tin}">Thông tin</a></li>
+                    <li><a class="nav-link" th:href="@{/beestore/lien-he}">Liên hệ</a></li>
+
+
+                </ul>
+
+                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                    <li><a class="nav-link" href="cart.html"><img src="../images/cart.svg"></a></li>
+                    <li><a class="nav-link" href="#"><img src="../images/user.svg"></a></li>
+
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,677 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
+    />
+    <meta content="Untree.co" name="author"/>
+    <link href="../..img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon"/>
+
+    <meta content="" name="description"/>
+    <meta content="bootstrap, bootstrap4" name="keywords"/>
+
+    <!-- Bootstrap CSS -->
+    <link href="/../css/customer/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+          rel="stylesheet"/>
+    <link href="/../css/customer/style.css" rel="stylesheet"/>
+    <link href="/../css/customer/tiny-slider.css" rel="stylesheet"/>
+    <link href="/../css/customer/shop.css" rel="stylesheet"/>
+    <link href="/../css/customer/detail.css" rel="stylesheet"/>
+    <title>
+        BeeStore
+    </title>
+</head>
+<body>
+<!-- Start Header/Navigation -->
+<nav arial-label="Furni navigation bar" class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/beestore/trang-chu}">
+            <img style="height: 50px; width: 50px;"
+                 th:src="@{/img/e77e3572384e5c9af495d1acfbfa6f70.jpg}">
+            <a class="navbar-brand"
+               th:href="@{/beestore/trang-chu}">BeeStore</a></a>
+
+        <button aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-bs-target="#navbarsFurni" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="active">
+                    <a class="nav-link" th:href="@{/beestore/trang-chu}">Trang chủ</a>
+                </li>
+                <li><a class="nav-link" th:href="@{/beestore/cua-hang}">Cửa hàng</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/dichvu}">Dịch vụ</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/thongtin}">Thông tin</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/lienhe}">Liên hệ</a></li>
+
+
+            </ul>
+<!-- số lượng sản phẩm có trong card-->
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <li class="nav-item position-relative">
+                    <a class="nav-link" th:href="@{/beestore/cart}" title="View Cart">
+                        <img src="/../images/cart.svg" class="cart-icon" alt="Cart Icon">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                              th:if="${totalQuantity > 0}" th:text="${totalQuantity}">
+            0
+        </span>
+                    </a>
+                </li>
+                    <div class="dropdown show" style="padding-top: 5px">
+                        <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            <img src="/../images/user.svg">
+                        </a>
+                        <div >
+                            <!-- If checkSecurity is true, display the dropdown menu -->
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/admin/thongtincanhan'">Tài khoản </a>
+                                <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đơn mua</a>
+                                <a class="dropdown-item" th:href="'/logout'">Đăng xuất</a>
+                            </div>
+                        </div>
+                        <div >
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đăng nhập</a>
+                            </div>
+                        </div>
+                    </div>                </li>
+
+                </li>
+                <style>
+                    /* Dropdown Button */
+                    /* Ẩn dropdown menu mặc định */
+                    .dropdown-menu {
+                        display: none;
+                        opacity: 0;
+                        position: absolute;
+                        top: 100%; /* Hiển thị menu bên dưới button */
+                        background-color: #fff; /* Màu nền của dropdown */
+                        transition: opacity 0.3s ease; /* Hiệu ứng mượt mà cho opacity */
+                    }
+
+                    /* Hiển thị dropdown menu khi hover vào .dropdown */
+                    .dropdown:hover .dropdown-menu {
+                        display: block;
+                        opacity: 1;
+                    }
+
+                    /* Hiệu ứng transition khi hiển thị dropdown */
+                    .dropdown-menu {
+                        transform: translateY(-10px); /* Di chuyển dropdown lên trên */
+                        transition: transform 0.3s ease, opacity 0.3s ease;
+                    }
+
+                    .dropdown:hover .dropdown-menu {
+                        transform: translateY(0); /* Đặt lại vị trí ban đầu */
+                    }
+
+                    .dropdown-toggle {
+                        cursor: pointer;
+                        padding: 0;
+                        border: none;
+                        background: transparent;
+                        outline: none;
+                        height: 100%; /* Đặt chiều cao của dropdown button là 100% */
+                    }
+
+                    /* Dropdown Menu */
+                    .dropdown-menu {
+                        width: auto;
+                        box-shadow: none;
+                    }
+
+                    /* Dropdown Items */
+                    .dropdown-item {
+                        display: block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        text-align: left;
+                    }
+
+                    /* Cart Icon */
+                </style>
+            </ul>
+
+        </div>
+    </div>
+
+</nav>
+
+
+<!-- Start Hero Section -->
+<h1 style="color: #000000; text-align: center; padding-top: 100px">
+    <i class="fas fa-shopping-cart" style="font-size: 40px;"></i> Giỏ hàng
+</h1>
+<!-- End Hero Section -->
+
+<!-- thông báo giỏ hàng rỗng -->
+<div class="row mb-5" th:if="${#lists.isEmpty(listGioHangChiTiet)}">
+    <div class="col-md-12" style="text-align: center; padding-top: 50px">
+        <img style=""
+             th:src="@{/images/empty-cart.png}">
+        <h6>Hãy tiếp tục mua sắm để thêm sản phẩm vào giỏ hàng của bạn.</h6>
+    </div>
+</div>
+
+<div class="untree_co-section before-footer-section">
+    <div class="container">
+        <div class="row mb-5" th:unless="${#lists.isEmpty(listGioHangChiTiet)}">
+            <div class="col-md-12">
+                <div class="site-blocks-table">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="product-thumbnail">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="selectAllCheckbox"
+                                           onclick="toggleCheckboxes(this)" type="checkbox"
+                                           value="">
+                                </div>
+                            </th>
+
+
+                            <th class="product-name">Hình ảnh </th>
+                            <th class="product-name">Sản phẩm</th>
+                            <th class="product-price"> Đơn Giá</th>
+                            <th class="product-quantity" >Số lượng</th>
+                            <th class="product-total">Thành tiền</th>
+                            <th class="product-remove">Thao Tác</th>
+                        </tr>
+                        </thead>
+                        <tbody th:each="gioHangChiTiet : ${listGioHangChiTiet}">
+                        <input type="hidden" name="idGioHangChiTiet" th:value="${gioHangChiTiet.id}">
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                    <span class="id" hidden th:data-id="${gioHangChiTiet.id}"></span>
+                                    <span class="id-cart" hidden th:data-id="${gioHangChiTiet.gioHang.id}"></span>
+                                    <input class="form-check-input" name="options[]" id="checkboxID"
+                                           th:value="${gioHangChiTiet.id}" onchange="updatePrice(this)" type="checkbox">
+                                </div>
+                            </td>
+                            <td class="product-thumbnail">
+                                <img alt="Image"
+                                     class="img-fluid"
+                                     th:src="@{'../images/' + ${gioHangChiTiet.chiTietSanPham.sanPham.anhChinh}}"
+                                     style="width: 200px; height: 180px;"
+                                />
+                            </td>
+                            <td class="product-name">
+                                <h2 class="h5 text-black name" style="font-weight: bold; color: #333; line-height: 1.4;">
+                                    <span th:text="${gioHangChiTiet.chiTietSanPham.sanPham.ten}"></span>
+                                    <span th:text="${' ' + gioHangChiTiet.chiTietSanPham.deGiay.ten}"></span>
+                                    <span th:text="${' (Màu sắc: ' + gioHangChiTiet.chiTietSanPham.mauSac.ten + ', Kích thước: ' + gioHangChiTiet.chiTietSanPham.kichThuoc.ten + ')'}"></span>
+                                </h2>
+                           Dòng Sản Phẩm :  <span th:text="${' ' + gioHangChiTiet.chiTietSanPham.sanPham.dongSanPham.ten}"></span>
+                            </td>
+                            <td class="price"
+                                th:text="${#numbers.formatDecimal(gioHangChiTiet.chiTietSanPham.giaBan, 0, 'POINT', 0, 'COMMA') + ' VND'}">
+                            </td>
+                            <input type="hidden" class="priceValue" th:value="${gioHangChiTiet.chiTietSanPham.giaBan}">
+
+                            <td>
+                                <div class="input-group mb-3 d-flex align-items-center quantity-container" style="max-width: 100%">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-outline-black" type="button"
+                                                onclick="adjustQuantity(this, -1)">
+                                            &minus;
+                                        </button>
+                                    </div>
+                                    <input aria-describedby="button-addon1"
+                                           aria-label="Example text with button addon"
+                                           class="form-control text-center quantity-amount"
+                                           placeholder=""
+                                           th:value="${gioHangChiTiet.soLuong}"
+                                           type="text"
+                                           name="soLuong"
+                                           onchange="handleChangeOfInput(this)"
+                                           th:data-max-quantity="${gioHangChiTiet.chiTietSanPham.soLuongTon}"/>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-black" type="button"
+                                                onclick="adjustQuantity(this, 1)">
+                                            &plus;
+                                        </button>
+                                    </div>
+                                </div>
+                                <span>Số lượng Tồn: [[${gioHangChiTiet.chiTietSanPham.soLuongTon}]]</span>
+                            </td>
+
+                            <td class="thanhtien"
+
+                                th:text="${#numbers.formatDecimal(gioHangChiTiet.soLuong * gioHangChiTiet.chiTietSanPham.giaBan, 0, 'POINT', 0, 'COMMA') + ' VND'}">
+                            </td>
+                            <input type="hidden" class="thanhtienValue"
+                                   th:value="${gioHangChiTiet.soLuong * gioHangChiTiet.chiTietSanPham.giaBan}">
+
+                            <td>
+                                <a class="btn btn-black btn-sm delete-button"
+                                   th:attr="data-id=${gioHangChiTiet.id}">
+                                    Xóa <!-- Text for delete action -->
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row mb-5">
+                    <div class="col-md-6">
+                        <a class="btn btn-outline-black btn-sm btn-block" th:href="@{/beestore/cua-hang}" type="button">
+                            Tiếp tục mua hàng
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6 pl-5">
+                <div class="row justify-content-end">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-12 text-right border-bottom mb-5">
+                                <h3 class="text-black h4 text-uppercase">Thành Tiền</h3>
+                            </div>
+                        </div>
+
+                        <div class="row mb-5">
+                            <div class="col-md-6">
+                                <span class="text-black">Tổng thanh toán </span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong class="text-black total">0</strong>
+                            </div>
+                        </div>
+<hr>
+
+<P></P>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-black btn-lg py-3 btn-block"
+                                        onclick="checkOut()">
+                                    Mua hàng
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog"
+     aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmationModalLabel">Xóa Sản Phẩm</h5>
+<!--                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
+<!--&lt;!&ndash;                    <span aria-hidden="true">&times;</span>&ndash;&gt;-->
+<!--                </button>-->
+            </div>
+            <div class="modal-body">
+                Bạn có muốn xóa sản phẩm này khỏi giỏ hàng không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="row g-5 mb-5" style="color: black" >
+            <div class="col-lg-4">
+                <div style="color: black"  class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo" style="color: black" >BeeStore<span></span></a></div>
+                <p style="color: black" class="mb-4"> Hệ thống giày thể thao số 1 Hà Nội</p>
+
+
+            </div>
+
+            <div class="col-lg-8">
+                <div class="row links-wrap">
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="#">Dịch vụ</a></li>
+                            <li><a href="#">Thông tin</a></li>
+                            <li><a href="#">Trung tâm trợ giúp</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Vận chuyển</a></li>
+                            <li><a href="#">Khu vực</a></li>
+                            <li><a href="#">Kênh bán hàng</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Hướng dẫn mua hàng</a></li>
+                            <li><a href="#">Đội ngũ</a></li>
+                            <li><a href="#">Trả hàng</a></li>
+                            <li><a href="#">Bảo mật</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Chăm sóc khách hàng</a></li>
+                            <li><a href="#">Chính sách bảo hành</a></li>
+                            <li><a href="#">Hoàn tiền</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="border-top copyright">
+            <div class="row pt-4">
+                <div class="col-lg-6">
+                    <p class="mb-2 text-center text-lg-start">Chủ sở hữu &copy;
+                        <script>document.write(new Date().getFullYear());</script> &mdash;
+                        BEESTORE_SD01_SUM24
+
+                        <!-- License information: https://untree.co/license/ -->
+                    </p>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</footer>
+<div class="modal fade text-center" id="modalDialog"
+     data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle">Warning</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="modalBody"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="/../js/customer/bootstrap.bundle.min.js"></script>
+<script src="/../js/customer/tiny-slider.js"></script>
+<script src="/../js/customer/custom.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+
+    function adjustQuantity(buttonElement , change) {
+
+        const inputElement = buttonElement.closest('.quantity-container').querySelector('.quantity-amount');
+
+        const currentValue = parseInt(inputElement.value) || 0;
+        const maxQuantity = parseInt(inputElement.getAttribute('data-max-quantity'));
+
+
+
+        let newValue = currentValue + change;
+        if (newValue < 0) newValue = 0;
+        if (newValue > maxQuantity) newValue = maxQuantity;
+
+        inputElement.value = newValue;
+
+        handleChangeOfInput(inputElement);
+    }
+
+    function handleChangeOfInput(input) {
+        const maxQuantity = parseInt(input.getAttribute('data-max-quantity'));
+        let value = parseInt(input.value) || 0;
+        if (value < 0) value = 0;
+        if (value > maxQuantity) value = maxQuantity;
+
+        input.value = value;
+    }
+
+    function updateQuantityInDatabase(productId, quantity) {
+        $.ajax({
+            type: 'POST',
+            url: '/beestore/cart/updateQuantity',
+            data: {idGioHangChiTiet: productId, soLuong: quantity},
+            success: function (response) {
+                // Handle the response, if needed
+                console.log('Update successful');
+            },
+            error: function (error) {
+                console.error('Error updating quantity:', error.responseText);
+            }
+        });
+    }
+
+
+    function updateQuantity(input) {
+        let quantity = input.value;
+
+        if (isNaN(quantity) || quantity < 1) {
+            // Display the modal
+            $('#quantityModal').modal('show');
+            // Reset the input value to 1
+            input.value = 1;
+            return;
+        }
+
+        let productId = input.parentElement.parentElement.parentElement.querySelector("input[type='checkbox']").value;
+
+        // Call the updateQuantityInDatabase function to update the quantity in the database
+        updateQuantityInDatabase(productId, quantity);
+
+        // Update the total price and any other necessary UI changes
+        updatePrice();
+    }
+
+    function formatCurrency(amount) {
+        return new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }).formatToParts(amount).map(part => {
+            if (part.type === 'currency') {
+                return ''; // Bỏ qua ký hiệu tiền tệ
+            }
+            return part.value;
+        }).join('');
+    }
+
+    function getTotalMoney() {
+        var checkboxes = document.querySelectorAll("tbody input[type='checkbox']");
+        let total = 0;
+        checkboxes.forEach(item => {
+            if (item.checked) {
+                let father = item.parentElement.parentElement.parentElement;
+                let price = father.querySelector(".thanhtienValue").value;
+                price = Number(price);
+                total += price;
+            }
+        })
+        return total;
+    }
+
+    function updatePrice() {
+        let totalE = document.querySelector(".total");
+        let price = getTotalMoney();
+        totalE.innerHTML = formatCurrency(price) + ' VND'; // Thêm ' VND' đằng sau giá trị
+    }
+
+    function handleChangeOfInput(input) {
+
+        console.log("in change of input quantity ");
+        let father = input.parentElement.parentElement.parentElement.parentElement;
+        let priceE = father.querySelector(".thanhtien");
+        let price = father.querySelector(".priceValue").value;
+        price = Number(price);
+
+        let qntE = father.querySelector(".quantity-amount");
+        let qnt = father.querySelector(".quantity-amount").value;
+        let maxQuantity = parseInt(father.querySelector(".quantity-amount").getAttribute('data-max-quantity'));
+
+        if (isNaN(qnt)) {
+            // Display the modal
+            showThongBaoModal(" Bạn Vui Lòng Nhập Lại ! Nhập Không Đúng Định Dạng !");
+            input.value = 1;
+            return;
+        } else if (qnt < 1){
+            showThongBaoModal(" Bạn Vui Lòng Nhập Lại ! Số Lượng Sản Phẩm Không Được Là Âm !");
+            input.value = 1;
+            return;
+        } else if (qnt > maxQuantity) {
+            showThongBaoModal(" Bạn Vui Lòng Nhập Lại ! Vượt Quá Số Lượng Tồn !");
+            input.value = 1;
+            return;
+        }
+
+        qntE.value = qnt;
+        father.querySelector(".thanhtienValue").value = price * qnt;
+        priceE.innerText = formatCurrency(price * qnt) + 'VND';
+
+        let checkBox = father.querySelector("input[type='checkbox']");
+        checkBox.checked && updatePrice();
+        updateQuantityInDatabase(checkBox.value, qnt);
+    }
+
+    function handlerChange(e) {
+        let className = e.getAttribute("class");
+        let father = e.parentElement.parentElement.parentElement.parentElement;
+        let priceE = father.querySelector(".thanhtien");
+        let price = father.querySelector(".priceValue").value;
+        price = Number(price);
+
+        let qntE = father.querySelector(".quantity-amount");
+        let qnt = father.querySelector(".quantity-amount").value;
+        let maxQuantity = parseInt(father.querySelector(".quantity-amount").getAttribute('data-max-quantity'));
+
+        if (className === "cong") {
+            qnt = Number(qnt) + 1;
+        } else if (className === "tru") {
+            qnt = Number(qnt) - 1;
+        }
+
+        // Validate quantity: should be a number greater than or equal to 1
+        if (isNaN(qnt) || qnt < 1) {
+            // Display the modal
+            showThongBaoModal( " Bạn Vui Lòng Nhập Lại ! Số Lượng Không Được Là Âm!");
+            return;
+        }else if (qnt > maxQuantity){
+            showThongBaoModal(" Bạn Vui Lòng Nhập Lại ! Vượt Quá Số Lượng Tồn!");
+            return;
+        }
+
+        qntE.value = qnt;
+        father.querySelector(".thanhtienValue").value = price * qnt;
+        priceE.innerText = formatCurrency(price * qnt) + 'VND';
+
+        let checkBox = father.querySelector("input[type='checkbox']");
+        checkBox.checked && updatePrice();
+        updateQuantityInDatabase(checkBox.value, qnt);
+    }
+
+    function toggleCheckboxes(checkbox) {
+        // Lấy tất cả các ô checkbox trong tbody
+        var checkboxes = document.querySelectorAll("tbody input[type='checkbox']");
+
+        // Đặt trạng thái của các ô checkbox đằng sau bằng giá trị của ô checkbox đầu tiên
+        checkboxes.forEach(item => {
+            item.checked = checkbox.checked;
+            updatePrice();
+        });
+    }
+
+
+    document.querySelectorAll('.delete-button').forEach(function (button) {
+        button.addEventListener('click', function () {
+            let id = this.getAttribute('data-id');
+
+            // Show the confirmation modal
+            $('#deleteConfirmationModal').modal('show');
+
+            // Set up event listener for the delete button in the modal
+            document.getElementById('confirmDelete').addEventListener('click', function () {
+                // Redirect to the delete URL if the user confirms
+                window.location.href = '/beestore/cart/xoa/' + id;
+
+                // Hide the modal after the action is taken
+                $('#deleteConfirmationModal').modal('hide');
+            });
+        });
+    });
+
+    function checkOut() {
+        let items = document.querySelectorAll("tbody input[type='checkbox']");
+        let isQuantityValid = true;
+
+        items.forEach(item => {
+            if (item.checked) {
+                let father = item.parentElement.parentElement.parentElement;
+                let quantity = parseInt(father.querySelector(".quantity-amount").value);
+                let maxQuantity = parseInt(father.querySelector(".quantity-amount").getAttribute('data-max-quantity'));
+
+                if (quantity > maxQuantity) {
+                    isQuantityValid = false;
+                    return;
+                }
+            }
+        });
+
+        // Nếu số lượng vượt quá số lượng tồn, hiển thị modal lỗi
+        if (!isQuantityValid) {
+            showThongBaoModal(" Bạn Vui Lòng Nhập Lại ! Số Lượng Sản Phẩm vượt Quá Số Lượng Tồn!");
+            return;
+        }
+
+        var checkboxes = document.querySelectorAll("input[name='options[]']");
+        // Mảng để lưu trữ giá trị của các checkbox được chọn
+        var selectedOptions = [];
+        var quantity = [];
+
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                // Nếu checkbox được chọn, thêm giá trị của nó vào mảng
+                selectedOptions.push(encodeURIComponent(checkbox.value));
+            }
+
+            var soLuongInput = checkbox.closest('tr').querySelector('input[name="soLuong"]');
+
+
+        if (soLuongInput) {
+            quantity.push(soLuongInput.value);
+        }
+        });
+
+        if (selectedOptions.length === 0) {
+            // Thay vì sử dụng alert, hiển thị modal Bootstrap
+            showThongBaoModal(" Bạn Hãy Chọn Một Sản Phẩm Trong Giỏ Hàng Để Thanh Toán !");
+            return; // Không chuyển hướng nếu không có checkbox nào được chọn
+        }
+
+        // Chuyển đến đường dẫn checkout và truyền giá trị mã hóa thông qua tham số
+        window.location.href = '/beestore/cart/checkout?options=' + selectedOptions.join(',');
+    }
+</script>
+
+
+<script src="/js/admin/index_form.js"></script>
+</body>
+</html>

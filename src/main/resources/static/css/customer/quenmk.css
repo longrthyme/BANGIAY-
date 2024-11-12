@@ -1,0 +1,57 @@
+/* Style the page title */
+.page-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center; /* Center-align the title */
+}
+
+/* Style the container */
+.col-md-6 {
+  margin-left: auto; /* Center the container horizontally */
+  margin-right: auto;
+  width: 40%;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+}
+
+/* Style form labels */
+.form-group label {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Style form inputs */
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+}
+
+/* Style the "Gửi" button */
+.submit-button .main-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* Style the "Gửi" button on hover */
+.submit-button .main-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Style the error message */
+.text-danger {
+  font-size: 12px;
+  color: #ff0000; /* Red color for error messages */
+  display: block; /* Display error message as a block element */
+  margin-top: 5px;
+  text-align: center; /* Center-align error message */
+}

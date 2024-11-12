@@ -1,0 +1,973 @@
+<!-- /*
+* Bootstrap 5
+* Template Name: Furni
+* Template Author: Untree.co
+* Template URI: https://untree.co/
+* License: https://creativecommons.org/licenses/by/3.0/
+*/ -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
+    />
+    <meta content="Untree.co" name="author"/>
+    <link href="../..img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <meta content="" name="description"/>
+    <meta content="bootstrap, bootstrap4" name="keywords"/>
+
+    <!-- Bootstrap CSS -->
+    <link href="/../css/customer/bootstrap.min.css" rel="stylesheet"/>
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+            rel="stylesheet"
+    />
+    <link href="/../css/customer/style.css" rel="stylesheet"/>
+    <link href="/../css/customer/tiny-slider.css" rel="stylesheet"/>
+    <link href="/../css/customer/shop.css" rel="stylesheet"/>
+    <link href="/../css/customer/detail.css" rel="stylesheet"/>
+    <link href="/../../img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon">
+    <title>
+        BeeStore
+    </title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        /** Poppins Font **/
+
+        * gobal layout * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-color: #5344db;
+            --accent-color: #5344db;
+            --grey: #484848;
+            --bg-grey: #efefef;
+            --shadow: #949494;
+        }
+
+        .single-product {
+            width: 1080px;
+            position: relative;
+        }
+
+        /** Breadcrumb **/
+
+        .single-product .breadcrumb {
+            background: #48484810;
+            padding: 8px 4px;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .breadcrumb span {
+            display: inline-flex;
+            flex-direction: row;
+            gap: 8px;
+            margin-left: 8px;
+        }
+
+        .breadcrumb span:not(:last-child)::after {
+            content: '/';
+        }
+
+        .breadcrumb span a {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        /** product image **/
+
+        .single-product .product-image {
+            width: 100%;
+        }
+
+        .product-image .product-image-main {
+            position: relative;
+            display: block;
+            height: 480px;
+            /*background: var(--bg-grey);*/
+            padding: 10px;
+        }
+
+        .product-image-main img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .product-image-slider {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .product-image-slider img {
+            width: 90px;
+            height: 90px;
+            /*background: var(--bg-grey);*/
+            padding: 6px;
+            cursor: pointer;
+        }
+
+        .size-item {
+            margin-right: 10px; /* khoang cach giua cac size item  */
+        }
+
+        .toast.bg-success {
+    background-color: #28a745 !important;
+}
+
+.toast.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+.toast .btn-close-white {
+    filter: invert(1);
+}
+
+    </style>
+</head>
+<body>
+
+<!-- Start Header/Navigation -->
+<nav arial-label="Furni navigation bar" class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/beestore/trang-chu}">
+            <img style="height: 50px; width: 50px;"
+                 th:src="@{/img/e77e3572384e5c9af495d1acfbfa6f70.jpg}">
+            <a class="navbar-brand"
+               th:href="@{/beestore/trang-chu}">BeeStore</a></a>
+
+        <button aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+                data-bs-target="#navbarsFurni" data-bs-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="active">
+                    <a class="nav-link" th:href="@{/beestore/trang-chu}">Trang chủ</a>
+                </li>
+                <li><a class="nav-link" th:href="@{/beestore/cua-hang}">Cửa hàng</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/dichvu}">Dịch vụ</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/thongtin}">Thông tin</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/lienhe}">Liên hệ</a></li>
+
+
+            </ul>
+
+
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <li class="nav-item position-relative">
+                    <a class="nav-link" th:href="@{/beestore/cart}" title="View Cart">
+                        <img src="/../images/cart.svg" class="cart-icon" alt="Cart Icon">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                              th:if="${totalQuantity > 0}" th:text="${totalQuantity}">
+            0
+        </span>
+                    </a>
+                </li>
+                <div class="dropdown show" style="padding-top: 5px">
+                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <img src="/../images/user.svg">
+                    </a>
+                    <div >
+                        <!-- If checkSecurity is true, display the dropdown menu -->
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" th:href="'/admin/thongtincanhan'">Tài khoản </a>
+                            <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đơn mua</a>
+                            <a class="dropdown-item" th:href="'/logout'" >Đăng xuất</a>
+                        </div>
+                    </div>
+                        <div th:unless="${checkSecurity}">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đăng nhập</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                </li>
+
+                <style>
+                    /* Dropdown Button */
+                    /* Ẩn dropdown menu mặc định */
+                    .dropdown-menu {
+                        display: none;
+                        opacity: 0;
+                        position: absolute;
+                        top: 100%; /* Hiển thị menu bên dưới button */
+                        background-color: #fff; /* Màu nền của dropdown */
+                        transition: opacity 0.3s ease; /* Hiệu ứng mượt mà cho opacity */
+                    }
+
+                    /* Hiển thị dropdown menu khi hover vào .dropdown */
+                    .dropdown:hover .dropdown-menu {
+                        display: block;
+                        opacity: 1;
+                    }
+
+                    /* Hiệu ứng transition khi hiển thị dropdown */
+                    .dropdown-menu {
+                        transform: translateY(-10px); /* Di chuyển dropdown lên trên */
+                        transition: transform 0.3s ease, opacity 0.3s ease;
+                    }
+
+                    .dropdown:hover .dropdown-menu {
+                        transform: translateY(0); /* Đặt lại vị trí ban đầu */
+                    }
+
+                    .dropdown-toggle {
+                        cursor: pointer;
+                        padding: 0;
+                        border: none;
+                        background: transparent;
+                        outline: none;
+                        height: 100%; /* Đặt chiều cao của dropdown button là 100% */
+                    }
+
+                    /* Dropdown Menu */
+                    .dropdown-menu {
+                        width: auto;
+                        box-shadow: none;
+                    }
+
+                    /* Dropdown Items */
+                    .dropdown-item {
+                        display: block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        text-align: left;
+                    }
+
+                    /* Cart Icon */
+                </style>
+            </ul>
+
+        </div>
+    </div>
+
+</nav>
+
+<div class="untree_co-section product-section before-footer-section" style="margin-top: -100px" th:object="${spDetail}">
+    <div class="container">
+
+        <hr class="box">
+        <form method="post" th:action="@{/beestore/cart/add/{id}(id=${id})}" id="add-to-cart-form"
+              onsubmit="return validateQuantity()">
+            <input type="hidden" id="availableQuantity" th:value="${soLuongTon}"/>
+            <input type="hidden" id="cartQuantity" th:value="${soLuongTrongGioHang}">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="product-image">
+                        <div class="product-image-main">
+                            <img th:src="@{'/../images/' + *{sanPham.anhChinh}}"
+                                 alt="Main Product Image" id="product-main-image"/>
+                        </div>
+                        <div class="product-image-slider">
+                            <img th:src="@{'/../images/' + *{sanPham.anhChinh}}"
+                                 alt="Main Product Image Thumbnail" class="image-list"/>
+                            <div style="margin-left: 5px" th:each="listAnh : ${listAnhDetail}">
+                                <img th:src="@{'/../images/' + ${listAnh.getUrl()}}"
+                                     alt="Product Image Thumbnail" class="image-list"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--Thông tin sản phẩm-->
+                <div class="col-lg-6">
+
+                    <h2 style="color: #0c0e12"
+                        th:text="*{sanPham.ten}"></h2>
+
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <label style="color: #101214">Loại Sản Phẩm </label>
+                            <span style="color: red" th:text="*{sanPham.dongSanPham.ten}"></span>
+                        </div>
+                        <div class="col-lg-5">
+                            <label style="color: #101214">Loại Đế </label>
+                            <span style="color: red" th:text="*{deGiay.ten}"></span>
+                        </div>
+                        <div class="col-lg-5">
+                            <div style="display: flex; align-items: center;">
+                                <p style="margin: 0; margin-right: 0.5em;">Còn</p>
+                                <p style="margin: 0; font-weight: bold;color: #1c7430" th:text="*{soLuongTon}"></p>
+                                <p style="margin: 0; margin-left: 0.5em;">sản phẩm</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p></p>
+
+                    <div>
+    <span class="gia"
+          th:text="*{#numbers.formatDecimal(giaBan, 0, 'POINT', 0, 'COMMA') + ' VND'}"
+          style="font-size: 1.5em; font-weight: bold;"></span>
+                        <span th:if="${spDetail.giaMacDinh != spDetail.giaBan}"
+                              style="text-decoration: line-through; font-size: 1.2em;">
+        <span th:text="*{#numbers.formatDecimal(giaMacDinh, 0, 'POINT', 0, 'COMMA') + ' VND'}"></span>
+    </span>
+                    </div>
+                   <p></p>
+                    <section>
+                        <div style="display: flex; align-items: center;">
+                            <p class="p"
+                               style="font-family: 'Montserrat Medium'; font-size: 1.2em; margin: 0; margin-right: 1em;">
+                                Vận Chuyển:
+                            </p>
+                            <div class="shipping-details" style="display: flex; align-items: center; gap: 1em;">
+                                <div class="free-shipping" style="display: flex; align-items: center; gap: 0.5em;">
+                                    <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/productdetailspage/d9e992985b18d96aab90.png"
+                                         height="20"
+                                         alt="Free shipping icon"
+                                         class="shipping-icon">
+                                    <div class="free-shipping-text">
+                                        <div>Miễn phí vận chuyển</div>
+                                    </div>
+                                </div>
+                                <div class="shipping-info-details" style="display: flex; flex-direction: column;">
+                                    <div class="delivery-location" style="display: flex; align-items: center; gap: 0.5em;">
+                                        <img alt="icon shipped locally" class="i9sDsG" src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/productdetailspage/baa823ac1c58392c2031.svg">
+
+                                        <span class="location-label">Vận chuyển tới</span>
+                                        <button class="location-button" style="display: flex; align-items: center; border: none; background: none; cursor: pointer;">
+                                            <span class="location-text">Hà Nội</span>
+                                            <img alt="icon arrow down" class="arrow-icon" src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/productdetailspage/c98ab2426710d89c9f14.svg">
+                                        </button>
+                                    </div>
+                                    <div class="shipping-cost" style="display: flex; align-items: center; gap: 0.5em;">
+                                        <div class="cost-label">phí vận chuyển</div>
+                                        <div class="cost-value">
+                                            ₫0
+                                            <img alt="icon arrow down" class="arrow-icon" src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/productdetailspage/c98ab2426710d89c9f14.svg">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div style="display: flex; align-items: center;">
+                            <p class="p" style="font-family: 'Montserrat Medium'; font-size: 1.2em; margin: 0; margin-right: 1em;">
+                                Chính Sách Trả hàng:
+                            </p>
+                            <div class="o8k8S4" style="display: flex; align-items: center;">
+                                <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/productdetailspage/b69402e4275f823f7d47.svg" class="ikrz0A" style="margin-right: 10px;"/>
+                                <div class="Q8e31z" style="margin-right: 10px;">Trả hàng 7 ngày</div>
+                                <div class="w8_Dsz" style="margin-right: 10px;">Đổi ý miễn phí</div>
+                                <div class="shopee-drawer" id="pc-drawer-id-4" tabindex="0">
+                                    <img alt="icon help" class="gdYMVU" src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/productdetailspage/be6f27f93268c0f88ded.svg"/>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <p></p>
+                    <section style="display: flex; align-items: center; margin-bottom: 0;">
+                        <p class="p" style="font-family: 'Montserrat Medium'; font-size: 1.2em; margin-bottom: 0; margin-right: 1em;">
+                            Kích cỡ
+                        </p>
+                        <div class="size-options" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <!-- Loop through kichThuocs list -->
+                            <div class="size-item" th:each="kichThuoc, iterStat : ${kichThuocs}" style="display: flex; align-items: center;">
+                                <input autocomplete="off"
+                                       th:id="'size-radio-' + ${iterStat.index}"
+                                       class="btn-check"
+                                       name="sizeId"
+                                       type="radio"
+                                       th:value="${kichThuoc.id}"
+                                       th:checked="${kichThuoc.id == selectedSize}">
+                                <label class="detail-btn-size btn-outline-secondary"
+                                       th:for="'size-radio-' + ${iterStat.index}"
+                                       style="font-family: 'Montserrat Medium'; font-size: 1em; margin-left: 5px;">
+                                    <span th:text="${kichThuoc.ten}"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <p></p>
+
+
+                    <div style="display: flex; align-items: center;">
+                        <p class="p" style="font-family: 'Montserrat Medium'; font-size: 1.2em; margin-bottom: 0; margin-right: 1em;">
+                            Màu sắc:
+                        </p>
+                        <div class="d-flex flex-wrap justify-content-between">
+                            <!-- Loop through mauSacs list -->
+                            <div class="size-item mb-2" th:each="mauSac, iterStat : ${mauSacs}" style="margin-right: 10px;">
+                                <input autocomplete="off"
+                                       th:id="'color-radio-' + ${iterStat.index}"
+                                       class="btn-check"
+                                       name="colorId"
+                                       type="radio"
+                                       th:value="${mauSac.id}"
+                                       th:checked="${mauSac.id == selectedColor}">
+
+                                <label class="detail-btn-color btn-outline-secondary"
+                                       th:for="'color-radio-' + ${iterStat.index}"
+                                       style="font-family: 'Montserrat Medium'; font-size: 1em;">
+                                    <span th:text="${mauSac.ten}"></span>
+                                </label>
+                            </div>
+                        </div>
+
+
+
+
+                        <br>
+
+
+
+                </div>
+
+
+
+                    <div class="row" style="margin-top: 5%;">
+                        <div class="col-lg-2 d-flex align-items-center">
+                            <p class="p" style="margin: 0;">Số lượng:</p>
+                        </div>
+
+                        <div class="col-lg-10 d-flex align-items-center">
+                            <div class="input-group mb-3 quantity-container" style="max-width: 120px;">
+                                <div class="input-group-prepend">
+                                    <button class="detail-btn-sl btn-outline-black decrease" type="button">
+                                        &minus;
+                                    </button>
+                                </div>
+                                <input
+                                        aria-describedby="button-addon1"
+                                        aria-label="Example text with button addon"
+                                        class="form-control text-center quantity-amount detail-text-ph"
+                                        name="soLuong"
+                                        placeholder=""
+                                        style="border: 1px solid #0c0e12; padding: 0.5em;"
+                                        th:value="${param.soLuong != null ? param.soLuong : 1}"
+                                        type="text"
+                                />
+                                <div class="input-group-append">
+                                    <button  class="detail-btn-sl btn-outline-black increase" type="button">
+                                        &plus;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <button href="/beestore/cart" class="btn" style="margin-bottom: 20px" type="submit"> Thêm vào giỏ hàng</button>
+                    </div>
+
+
+                </div>
+<!--thông báo các lỗi-->
+            <div class="modal fade" id="quantityModal" tabindex="-1" aria-labelledby="quantityModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="quantityModalLabel">Thông báo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="modalBody">
+                            <!-- Nội dung thông báo sẽ được cập nhật từ JavaScript -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Đóng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--check số lượng-->
+            <script>
+                function validateQuantity() {
+                    console.log('Đang kiểm tra số lượng...');
+
+                    // Lấy giá trị số lượng từ trường ẩn và log
+                    var availableQuantity = parseInt(document.getElementById('availableQuantity').value);
+                    console.log('Số lượng có sẵn:', availableQuantity);
+
+                    // Lấy giá trị số lượng từ trường input và log
+                    var quantityInput = document.querySelector('.quantity-amount');
+                    var quantity = parseInt(quantityInput.value);
+                    console.log('Input Quantity:', quantity);
+
+                    // Lấy giá trị số lượng đã có trong giỏ hàng
+                    var cartQuantityInput = document.querySelector('#cartQuantity'); // Thay '#cartQuantity' bằng ID thích hợp của trường số lượng trong giỏ hàng
+                    var cartQuantity = parseInt(cartQuantityInput.value);
+                    console.log('Cart Quantity:', cartQuantity);
+
+                    // Kiểm tra số lượng
+                    if (isNaN(quantity) || quantity < 1) {
+                        updateModal('Số lượng không hợp lệ.');
+                        return false;
+                    }
+
+                    if (quantity > availableQuantity) {
+                        updateModal('Không thể thêm sản phẩm. Số lượng vượt quá số lượng tồn kho !');
+                        return false;
+                    }
+
+                    if (quantity + cartQuantity > availableQuantity) {
+                        updateModal('Không thể thêm số lượng đã chọn vào giỏ hàng vì sẽ vượt quá giới hạn mua hàng của bạn.');
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                function updateModal(message) {
+                    var modalBody = document.getElementById('modalBody');
+                    modalBody.innerHTML = '<p>' + message + '</p>';
+                    var quantityModal = new bootstrap.Modal(document.getElementById('quantityModal'));
+                    quantityModal.show();
+                }
+            </script>
+        </form>
+
+<!--mô tả sản phẩm ,feedback-->
+        <div>
+
+            <div>
+                <hr style="margin-top: 50px">
+            </div>
+
+            <div class="col" style="margin-left: 600px">
+                <h2 style="color: #0c0e12">Mô tả</h2>
+                <p th:text="*{sanPham.moTa}"></p>
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2 style="color: #0c0e12">Đánh Giá</h2>
+                    <br>
+                    <div>
+                        <h5>
+                            <i class="fas fa-user avatar" style="font-size: 22px;"></i>
+                            Duong*****
+                            <span class="stars" style="font-size: 12px;color: #fff936;margin-bottom: 5px">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+        </span>
+                        </h5>
+                        <div class="row">
+                            <div class="">
+                                <img src="/../images/AIR+FORCE+1+GS (2).png" alt="Sản phẩm" class="product-image" style="width: 150px;">
+                                <img src="/../images/AIR+FORCE+1+GS.png" alt="Sản phẩm" class="product-image" style="width: 150px;">
+                                <img src="/../images/AIR+FORCE+1+GS (1).png" alt="Sản phẩm" class="product-image" style="width: 150px;">
+                            </div>
+                            <div class="col-lg-3">
+                                <p>07:10 19-09-2023</p>
+                            </div>
+                            |
+                            <div class="col-lg-2">
+                                <p>Size: 41</p>
+                            </div>
+                            <div class="col-lg-3">
+                                <p>Màu sắc: Đỏ</p>
+                            </div>
+                        </div>
+                        <p>Giao hàng nhanh, size chuẩn, siêu ưng ý. Nên mua nhaa mọi ngườii
+                            đóng gói sản phẩm chắc chắn giày khá ổn như vậy là vừa ổn vs giá tiền rồi, shop có tặng kèm 1 đôi với
+
+                            +10 điểm cho độ hoàn thiện
+                            +10 điểm cho sự nhiệt tình nhé
+                            +Shop 5 SAo</p>
+                    </div>
+                    <hr>
+                    <div>
+                        <h5>
+                            <i class="fas fa-user avatar" style="font-size: 22px;"></i>
+                            Duong**** 2
+                            <span class="stars" style="font-size: 12px;color: #fff936">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+        </span>
+                        </h5>
+                        <div class="row">
+
+                                <div class="">
+                                    <img src="/../images/JORDAN+SPIZIKE+LOW (1).png" alt="Sản phẩm" class="product-image" style="width: 150px;">
+                                    <img src="/../images/JORDAN+SPIZIKE+LOW.png" alt="Sản phẩm" class="product-image" style="width: 150px;">
+                                    <img src="/../images/JORDAN+SPIZIKE+LOW (2).png" alt="Sản phẩm" class="product-image" style="width: 150px;">
+                                </div>
+                            <div class="col-lg-1" style="width: 150px">
+                                <p>07:10 19-09-2023</p>
+                            </div>
+                            |
+                            <div class="col-lg-2">
+                                <p>size: 35</p>
+                            </div>
+                            <div class="col-lg-3">
+                                <p>Màu sắc: Xanh</p>
+                            </div>
+                        </div>
+                        <p>Giày form đẹp, chất liệu mềm, thoải mái.
+                            Tem, nhãn đầy đủ. Shop còn tặng thêm vớ, túi vải & dây buộc giày nữa.
+                            Xứng đáng 5*. Mình sẽ còn ủng hộ.
+                            Xin cảm ơn 🙏🏾🙏🏾🙏🏾🙏🏾🙏🏾🙏🏾🙏🏾🙏🏾🙏🏾🙏🏾🙏🏾🙏🏾🙏🏾</p>
+                    </div>
+                    <hr>
+                    <div>
+                        <h5>
+                            <i class="fas fa-user avatar" style="font-size: 22px;"></i>
+                            Duong**** 3
+                            <span class="stars" style="font-size: 12px;color: #fff936">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+        </span>
+                        </h5>
+                        <div class="row">
+                            <div class="">
+                                <img src="/../images/NIKE+AIR+MAX+90+PRM (3).png" alt="Sản phẩm" class="product-image" style="width: 150px;">
+                                <img src="/../images/NIKE+AIR+MAX+90+PRM (2).png" alt="Sản phẩm" class="product-image" style="width: 150px;">
+                                <img src="/../images/NIKE+AIR+MAX+90+PRM (1).png" alt="Sản phẩm" class="product-image" style="width: 150px;">
+                            </div>
+                            <div class="col-lg-1" style="width: 150px">
+                                <p>07:10 19-09-2023</p>
+                            </div>
+                            |
+                            <div class="col-lg-2">
+                                <p>size: 39</p>
+                            </div>
+                            <div class="col-lg-3">
+                                <p>Màu sắc: Trắng</p>
+                            </div>
+                        </div>
+                        <p>Hoàn toàn vượt quá mong đợi, giao hàng rất nhanh, đóng gói rất cẩn thận và chặt chẽ Rất hài lòng với một khu mua sắm, chất lượng rất tốt 🥰 Tôi hy vọng nhiều bạn sẽ tin tưởng tôi, và chủ sở hữu có một thái độ rất tốt !!!
+                            giày xinh lắm cả nhà ơi, ưng lắm nha, shop còn rất nhiệt tình nữa ạ, nên mua nha cả nhà.</p>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+<hr>
+<!--        list sản phẩm random-->
+        <div class="row">
+            <h2 style="color: #0c0e12; font-family: 'Montserrat Medium'; margin-bottom: 20px;">Bạn có thể thích</h2>
+            <!-- Start Column 1 -->
+            <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0" th:each="ctsp4rand : ${listRandom}">
+                <div class="product-item" style="border: 1px solid #ddd; border-radius: 10px; padding: 15px; transition: box-shadow 0.3s;">
+                    <a th:href="@{'/beestore/detaisp/' + ${ctsp4rand.getId()}}" style="text-decoration: none; color: inherit;">
+                        <img th:src="@{'/../images/' + ${ctsp4rand.getAnh_chinh()}}" class="img-fluid product-thumbnail" style="border-radius: 10px;">
+                        <h3 class="product-title" th:text="${ctsp4rand.getTenSp() +' '+ ctsp4rand.getTenDongSp() +' '+ ctsp4rand.getTenDe_giay() }" style="font-size: 16px; margin-top: 10px; font-family: 'Montserrat', sans-serif;"></h3>
+                        <strong th:if="${ctsp4rand.getGia_mac_dinh() != ctsp4rand.getGia_ban()}" class="product-price"
+                                th:text="${#numbers.formatDecimal(ctsp4rand.getGia_ban(), 0, 'POINT', 0, 'COMMA') + ' VND'}" style="color: red; font-size: 14px;"></strong>
+                        <strong th:if="${ctsp4rand.getGia_mac_dinh() == ctsp4rand.getGia_ban()}" class="product-price"
+                                th:text="${#numbers.formatDecimal(ctsp4rand.getGia_ban(), 0, 'POINT', 0, 'COMMA') + ' VND'}" style="color: #000; font-size: 14px;"></strong>
+                    </a>
+                    <a href="#" class="icon-cross" style="position: absolute; top: 10px; right: 10px;">
+                        <img src="/../images/cross.svg" class="img-fluid" style="width: 20px;">
+                    </a>
+                </div>
+            </div>
+            <!-- End Column 1 -->
+        </div>
+
+        <footer class="footer-section">
+    <div class="container relative">
+
+
+
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="subscription-form">
+                    <h3 class="d-flex align-items-center"><span class="me-1"><img src="../images/envelope-outline.svg"
+                                                                                  alt="Image"
+                                                                                  class="img-fluid"></span><span style="color: black" >Đăng ký nhận thông tin khuyến Mại</span>
+                    </h3>
+
+                    <form action="#" class="row g-3">
+                        <div class="col-auto">
+                            <input type="text" class="form-control" placeholder="Họ và tên">
+                        </div>
+                        <div class="col-auto">
+                            <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn">
+                                <span class="fa fa-paper-plane"></span>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+
+
+                <div id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8836968727605!2d105.74640787500061!3d21.03733908748429!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345515f14a641f%3A0xe7f2a647f98416cb!2sFPT%20Polytechnic!5e0!3m2!1sen!2s!4v1696820790226!5m2!1sen!2s" width="600" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><!-- End #map -->
+
+            </div>
+        </div>
+
+        <div class="row g-5 mb-5" style="color: black" >
+            <div class="col-lg-4">
+                <div style="color: black"  class="mb-4 footer-logo-wrap"><a href="../..img/e77e3572384e5c9af495d1acfbfa6f70.jpg" class="footer-logo" style="color: black" >BeeStore<span></span></a></div>
+                <p style="color: black" class="mb-4"> Hệ thống giày thể thao số 1 Hà Nội</p>
+
+
+            </div>
+
+            <div class="col-lg-8">
+                <div class="row links-wrap">
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="#">Dịch vụ</a></li>
+                            <li><a href="#">Thông tin</a></li>
+                            <li><a href="#">Trung tâm trợ giúp</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Vận chuyển</a></li>
+                            <li><a href="#">Khu vực</a></li>
+                            <li><a href="#">Kênh bán hàng</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Hướng dẫn mua hàng</a></li>
+                            <li><a href="#">Đội ngũ</a></li>
+                            <li><a href="#">Trả hàng</a></li>
+                            <li><a href="#">Bảo mật</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Chăm sóc khách hàng</a></li>
+                            <li><a href="#">Chính sách bảo hành</a></li>
+                            <li><a href="#">Hoàn tiền</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="border-top copyright">
+            <div class="row pt-4">
+                <div class="col-lg-6">
+                    <p class="mb-2 text-center text-lg-start">Chủ sở hữu &copy;
+                        <script>document.write(new Date().getFullYear());</script> &mdash;
+                        BEESTORE_SD01_SUM24
+
+                        <!-- License information: https://untree.co/license/ -->
+                    </p>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+<!--//thông báo add sản phẩm -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+        <div class="toast"
+             th:if="${toastMessage != null}"
+             role="alert" aria-live="assertive" aria-atomic="true"
+             data-bs-autohide="true" data-bs-delay="3000"
+             th:classappend="${toastType == 'success' ? 'bg-success text-white' : (toastType == 'error' ? 'bg-danger text-white' : '')}">
+            <div class="toast-header" th:classappend="${toastType == 'success' ? 'bg-success text-white' : (toastType == 'error' ? 'bg-danger text-white' : '')}">
+                <strong class="me-auto" th:text="${toastType == 'success' ? 'Success' : (toastType == 'error' ? 'Error' : 'Notification')}"></strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" th:text="${toastMessage}">
+                <!-- Toast message will be dynamically rendered here -->
+            </div>
+        </div>
+    </div>
+
+
+
+
+</footer>
+
+
+<script src="/../js/customer/bootstrap.bundle.min.js"></script>
+<script src="/../js/customer/tiny-slider.js"></script>
+<script src="/../js/customer/custom.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="/js/admin/index_form.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!--        js listanh-->
+<script>
+    const sliderMainImage = document.getElementById("product-main-image");
+    const sliderImageList = document.getElementsByClassName("image-list");
+    console.log(sliderImageList);
+
+    sliderImageList[0].onclick = function () {
+        sliderMainImage.src = sliderImageList[0].src;
+        console.log(sliderMainImage.src);
+    };
+
+    sliderImageList[1].onclick = function () {
+        sliderMainImage.src = sliderImageList[1].src;
+        console.log(sliderMainImage.src);
+    };
+
+    sliderImageList[2].onclick = function () {
+        sliderMainImage.src = sliderImageList[2].src;
+        console.log(sliderMainImage.src);
+    };
+
+    sliderImageList[3].onclick = function () {
+        sliderMainImage.src = sliderImageList[3].src;
+        console.log(sliderMainImage.src);
+    };
+    sliderImageList[4].onclick = function () {
+        sliderMainImage.src = sliderImageList[4].src;
+        console.log(sliderMainImage.src);
+    };
+
+</script>
+
+
+
+<script defer>
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+    console.log("Page loaded and DOM is ready");
+
+    // Select all radio buttons with the name 'sizeId'
+    var sizeRadios = document.querySelectorAll('input[name="sizeId"]');
+
+    // Extract the product ID from the URL path
+    var path = window.location.pathname;
+    var pathSegments = path.split('/');
+    var productId = pathSegments[pathSegments.length - 1];
+
+    // Add change event listeners to each radio button
+    sizeRadios.forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            // Get the selected size ID
+            var selectedSize = document.querySelector('input[name="sizeId"]:checked');
+
+            if (selectedSize) {
+                var sizeId = selectedSize.value;
+                var actionUrl = `/beestore/detaisp/${productId}`;
+
+                // Get the current URL and its search parameters
+                var url = new URL(window.location.href);
+                var searchParams = new URLSearchParams(url.search);
+
+                // Set the new sizeId parameter
+                searchParams.set('sizeId', sizeId);
+                console.log(`Size ID set to: ${sizeId}`);
+
+                // Remove colorId parameter if present
+                if (searchParams.has('colorId')) {
+                    searchParams.delete('colorId');
+                    console.log("colorId parameter removed");
+                }
+
+                // Construct the updated URL
+                var updatedUrl = `${actionUrl}?${searchParams.toString()}`;
+                console.log("Redirecting to URL: ", updatedUrl);
+
+window.location.replace(updatedUrl);
+
+
+            } else {
+                console.log("No sizeId selected");
+            }
+        });
+    });
+});
+</script>
+
+<!--js chọn kích thước màu sắc-->
+<script defer>
+    document.addEventListener("DOMContentLoaded", function() {
+            console.log("Page loaded and DOM is ready");
+ var path = window.location.pathname;
+    var pathSegments = path.split('/');
+    var productId = pathSegments[pathSegments.length - 1];
+            // Query all radio inputs for size and color selection
+            var sizeRadios = document.querySelectorAll('input[name="sizeId"]');
+            var colorRadios = document.querySelectorAll('input[name="colorId"]');
+
+            // Helper function to get the selected value
+            function getSelectedValue(name) {
+                var selectedElement = document.querySelector(`input[name="${name}"]:checked`);
+                return selectedElement ? selectedElement.value : null;
+            }
+
+            function redirectWithParams() {
+                var sizeId = getSelectedValue('sizeId');
+                var colorId = getSelectedValue('colorId');
+
+                if (sizeId && colorId) {
+                    var actionUrl = `/beestore/detaisp/${productId}`;
+                    var url = `${actionUrl}?sizeId=${sizeId}&colorId=${colorId}`;
+                    console.log("Redirecting to URL:", url);
+
+                    // Redirect to the URL with the selected sizeId and colorId as query parameters
+                    window.location.href = url;
+                } else {
+                    console.error("Both sizeId and colorId must be selected.");
+                }
+            }
+
+            colorRadios.forEach(function(radio) {
+                radio.addEventListener('change', redirectWithParams);
+            });
+        });
+
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+     var toastElement = document.querySelector('.toast');
+     if (toastElement) {
+         var toast = new bootstrap.Toast(toastElement, {
+             delay: 3000
+         });
+         toast.show();
+     }
+ });
+
+</script>
+
+</body>
+</html>

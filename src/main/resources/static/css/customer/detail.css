@@ -1,0 +1,80 @@
+.avatar {
+    width: 3%;
+}
+
+.gia {
+    font-family: "Montserrat Medium";
+    color: #dc3545;
+}
+
+.p {
+    font-family: "Montserrat Medium";
+    font-size: 15px;
+}
+
+.detail-btn-size {
+    background-color: white;
+    border: 1px solid #0f1116;
+    border-radius: 9%;
+    color: #0f1116;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.detail-btn-color{
+    background-color: #ffffff;
+    border: 1px solid #0f1116;
+    border-radius: 9%;
+    color: #0f1116;
+    width: 60px;
+    height: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: "Montserrat Medium";
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.detail-btn-sl{
+    background-color: white;
+    border: 1px solid #0f1116;
+    border-radius: 9%;
+    color: #0f1116;
+    height: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    cursor: pointer
+}
+
+.detail-btn-ph{
+    border-radius: 5px;
+    color: #0f1116;
+    width: 40px;
+    height: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    cursor: pointer
+}
+
+.detail-text-ph{
+    width: 30px;
+    height: 30px;
+    color: black;
+    text-align: center;
+
+}
+
+
+
+
+

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>BeeStore Admin</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="/../../img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/../../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/../../css/admin/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/../../css/admin/style.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a th:href="@{/admin/ban-hang}" class="navbar-brand mx-4 mb-3">
+
+                <h3 style="color: orange" ><i class="me-2" ></i>BeeStore </h3>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <img class="rounded-circle" th:src="@{/img/userNew.png}" alt="" style="width: 40px; height: 40px;">
+                    <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                    </div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
+
+                </div>
+            </div>
+            <div class="navbar-nav w-100">
+                <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
+                    Hàng</a>
+                <div class="nav-item dropdown">
+                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
+                        <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
+                            Phẩm</a>
+                        <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
+                        <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
+                        <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
+                        <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
+                        <a th:href="@{/admin/de-giay}" class="dropdown-item">* Đế Giày</a>
+
+                    </div>
+                </div>
+                <a th:href="@{/admin/hoa-don}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Hóa Đơn</a>
+
+                <div class="nav-item dropdown">
+                    <a  class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a th:href="@{/admin/khach-hang}"class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+                        <a th:href="@{/admin/nhan-vien}"  class="dropdown-item">* Tài Khoản Nhân Viên</a>
+
+
+                    </div>
+                </div>
+
+
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
+                        class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
+                <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
+                        class="fa fa-chart-bar me-2"></i>Thống Kê</a>
+            </div>
+        </nav>
+    </div>
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+
+
+            <div class="navbar-nav align-items-center ms-auto">
+                <div class="fa fa-sign-out"></div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-bars"></i>
+
+
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="container-fluid pt-4">
+            <h6 class="mb-4" style="font-size: 40px; text-align: center;">Chi Tiết  Phiếu Giảm Giá</h6>
+            <div class="bg-light rounded p-4" style="width: 50%; margin-left: 26%;">
+                <form th:action="@{/admin/phieu-giam-gia/update}" method="post" th:object="${phieuGiamGia}"
+                      onsubmit="return validateDate()">
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="">
+                        <label  for="ngayTao" class="form-label">Ngày Tạo :  <a id="ngayTao" th:text="*{ngayTao}"></a></label>
+
+                    </div>
+
+                    <div class=""  th:if="*{ngaySua}">
+                        <label   class="form-label">Ngày Sửa: <span id="ngaySua" th:text="*{ngaySua}"></span></label>
+                    </div>
+<hr>
+            <div class="mb-3">
+                        <label for="inputMa" class="form-label">Mã</label>
+                        <input type="text" class="form-control" id="inputMa" th:field="*{ma}" readonly/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputTen" class="form-label">Tên Mã Giảm Giá</label>
+                        <input type="text" class="form-control" id="inputTen" th:field="*{ten}"/>
+                        <div th:if="${#fields.hasErrors('ten')}" th:errors="*{ten}" style="color: red"></div>
+                        <div th:if="${errorTen}" th:text="${errorTen}" style="color: red"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputMuc" class="form-label">Mức Giảm Giá(%)</label>
+                        <input type="number" class="form-control" id="inputMuc" th:field="*{mucGiamGia}"/>
+                        <div th:if="${#fields.hasErrors('mucGiamGia')}" th:errors="*{mucGiamGia}"
+                             style="color: red"></div>
+                        <div id="errorMucGiam"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputMucGiam" class="form-label">Tiền Giảm Tối Đa(VND)</label>
+                        <input type="number" class="form-control" id="inputMucGiam" th:field="*{mucGiamToiDa}"/>
+                        <div th:if="${#fields.hasErrors('mucGiamToiDa')}" th:errors="*{mucGiamToiDa}"
+                             style="color: red"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputSoLuong" class="form-label">Số lượng</label>
+                        <input type="number" class="form-control" id="inputSoLuong" th:field="*{soLuong}"/>
+                        <div th:if="${#fields.hasErrors('soLuong')}" th:errors="*{soLuong}" style="color: red"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputApDung" class="form-label">Giá trị áp dụng tối thiểu(VND)</label>
+                        <input type="number" class="form-control" id="inputApDung" th:field="*{giaTriDonHang}"/>
+                        <div th:if="${#fields.hasErrors('giaTriDonHang')}" th:errors="*{giaTriDonHang}"
+                             style="color: red"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="NgayBatDau" class="form-label">Ngày Bắt Đầu</label>
+                        <input type="date" class="form-control" name="dateStart" id="NgayBatDau"
+                               th:field="*{ngayBatDau}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="NgayKetThuc" class="form-label">Ngày Kết Thúc</label>
+                        <input type="date" class="form-control" name="dateEnd" id="NgayKetThuc"
+                               th:field="*{ngayKetThuc}">
+                        <div th:if="${#fields.hasErrors('ngayKetThuc')}" th:errors="*{ngayKetThuc}"
+                             style="color: red"></div>
+                        <div id="errorMessage"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Mota" class="form-label">Mô Tả</label>
+                        <input type="text" class="form-control" id="Mota" th:field="*{moTa}"/>
+                    </div>
+
+
+
+                    <button type="submit" id="btn" onclick="myFunction()" class="btn btn-primary " style="margin-left: 30%;">
+                        Sửa Phiếu Giảm Giá
+                    </button>
+                </form>
+            </div>
+
+        </div>
+</div>
+
+
+
+    <script>
+        function myFunction() {
+            alert("Bạn Đã Sửa Thành Công Phiếu Giảm Giá");
+        }
+    </script>
+    <script th:inline="javascript">
+        function validateDate() {
+            var ngayBatDau = document.getElementById('NgayBatDau').value;
+            var ngayKetThuc = document.getElementById('NgayKetThuc').value;
+            var mucGiamGiaValue = parseInt(document.getElementById('inputMuc').value);
+
+            var startDate = new Date(ngayBatDau);
+            var endDate = new Date(ngayKetThuc);
+
+            if (startDate > endDate) {
+                document.getElementById('errorMessage').innerHTML = '<div style="color: red">Ngày Kết Thúc Phải Là Ngày Bắt Đầu Hoặc Tương Lai !</div>'
+                return false;
+            }
+            if (mucGiamGiaValue > 2147485649) {
+                document.getElementById('errorMucGiam').innerHTML = '<div style="color: red">Mức Giảm Giá Không Được Vượt Quá 100 !</div>';
+                return false;
+            }
+            return true;
+        }
+
+
+
+    </script>
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/../../lib/chart/chart.min.js"></script>
+<script src="/../../lib/easing/easing.min.js"></script>
+<script src="/../../lib/waypoints/waypoints.min.js"></script>
+<script src="/../../lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="/../../js/admin/main.js"></script>
+</body>
+
+</html>

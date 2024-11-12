@@ -1,0 +1,57 @@
+.box{
+    width: 100%;
+    height: 5px;
+    background-image: linear-gradient(90deg, #0a53be, #0b5ed7, #0c0e12);
+}
+.logo {
+    width: 5%;
+}
+
+.shop-btn-sx{
+    font-family: "Montserrat Medium";
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 13px;
+    color: black;
+    width: 130px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.shop-input-search{
+    border-radius: 13px;
+    border: 1px solid black;
+    width: 450px;
+    height: 37px;
+    padding: 8px 20px;
+    margin-left: 40px;
+}
+
+.shop-select-loc{
+    font-family: "Montserrat Medium";
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 13px;
+    color: black;
+    width: 150px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.shop-btn-sdloc{
+    font-family: "Montserrat Medium";
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 13px;
+    color: black;
+    width: 95px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    cursor: pointer;
+}

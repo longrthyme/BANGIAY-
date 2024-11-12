@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{customer-template/fragments/fragment :: page_head}">
+</head>
+<body>
+
+<!-- Start Header/Navigation -->
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/beestore/trang-chu}">
+            <img th:src="@{/img/e77e3572384e5c9af495d1acfbfa6f70.jpg}"
+                 style="height: 50px; width: 50px;">
+
+            <a class="navbar-brand"
+
+               th:href="@{/beestore/trang-chu}">BeeStore<span></span></a></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="active">
+                    <a class="nav-link" th:href="@{/beestore/trang-chu}">Trang chủ</a>
+                </li>
+                <li><a class="nav-link" th:href="@{/beestore/cua-hang}">Cửa hàng</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/dichvu}">Dịch vụ</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/thongtin}">Thông tin</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/lienhe}">Liên hệ</a></li>
+
+
+            </ul>
+
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <li class="nav-item position-relative">
+                    <a class="nav-link" th:href="@{/beestore/cart}" title="View Cart">
+                        <img src="/../images/cart.svg" class="cart-icon" alt="Cart Icon">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                              th:if="${totalQuantity > 0}" th:text="${totalQuantity}">
+            0
+        </span>
+                    </a>
+                </li>
+                <div class="dropdown show" style="padding-top: 5px">
+                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <img src="/../images/user.svg">
+                    </a>
+                    <div >
+                        <!-- If checkSecurity is true, display the dropdown menu -->
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" th:href="'/admin/thongtincanhan'">Tài khoản </a>
+                            <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đơn mua</a>
+                            <a class="dropdown-item" th:href="'/logout'" >Đăng xuất</a>
+                        </div>
+                    </div>
+
+                </div>             </li>
+
+                </li>
+                <style>
+                    /* Dropdown Button */
+                    /* Ẩn dropdown menu mặc định */
+                    .dropdown-menu {
+                        display: none;
+                        opacity: 0;
+                        position: absolute;
+                        top: 100%; /* Hiển thị menu bên dưới button */
+                        background-color: #fff; /* Màu nền của dropdown */
+                        transition: opacity 0.3s ease; /* Hiệu ứng mượt mà cho opacity */
+                    }
+
+                    /* Hiển thị dropdown menu khi hover vào .dropdown */
+                    .dropdown:hover .dropdown-menu {
+                        display: block;
+                        opacity: 1;
+                    }
+
+                    /* Hiệu ứng transition khi hiển thị dropdown */
+                    .dropdown-menu {
+                        transform: translateY(-10px); /* Di chuyển dropdown lên trên */
+                        transition: transform 0.3s ease, opacity 0.3s ease;
+                    }
+
+                    .dropdown:hover .dropdown-menu {
+                        transform: translateY(0); /* Đặt lại vị trí ban đầu */
+                    }
+
+                    .dropdown-toggle {
+                        cursor: pointer;
+                        padding: 0;
+                        border: none;
+                        background: transparent;
+                        outline: none;
+                        height: 100%; /* Đặt chiều cao của dropdown button là 100% */
+                    }
+
+                    /* Dropdown Menu */
+                    .dropdown-menu {
+                        width: auto;
+                        box-shadow: none;
+                    }
+
+                    /* Dropdown Items */
+                    .dropdown-item {
+                        display: block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        text-align: left;
+                    }
+
+                    /* Cart Icon */
+                </style>
+            </ul>
+
+        </div>
+    </div>
+
+</nav>
+<div class="container">
+    <div class="heading-page">
+        <h1 style="text-align: center; padding-top: 90px">
+            <strong style="color: #0b0b0b">Chính Sách BeeStore</strong>
+        </h1>
+    </div>
+
+<p></p>
+            <div class="heading-page">
+               <h3 style="color: #0b0b0b">1. Chính Sách Vận Chuyển </h3>
+            </div>
+            <p>
+               - Chính sách giao nhận được áp dụng cho tất cả các khách hàng đặt hàng qua website BeeStore
+                BeeStore sẽ thực hiện tất cả các yêu cầu vận chuyển cho khách hàng trên phạm vi toàn quốc
+            </p>
+            <p>
+               - Với những khách đến mua hàng tại cửa hàng hoặc thông qua website BeeStore
+                Quý khách vui lòng kiểm tra thật kỹ hàng hóa, đối chiếu sản phẩm với chứng từ, phiếu bảo hành trước khi nhận hàng.
+                Trường hợp hàng hóa phải chuyển từ kho của cửa hàng khác trong cùng hệ thống, nhân viên bán hàng sẽ liên hệ với Quý khách để thương thảo lại về thời gian giao hàng.
+
+            </p>
+            <p>
+                - Miễn phí giao lại: Trong trường hợp giao hàng lần đầu không thành
+                công, GHN sẽ miễn phí giao lại 2 lần tiếp theo trước khi hoàn trả
+                hàng cho người gửi.
+            </p>
+            <p> -Nhân viên chúng tôi liên lạc với khách hàng qua điện thoại không được nên không thể giao hàng.
+    <p>-Địa chỉ giao hàng bạn cung cấp không chính xác hoặc khó tìm.
+      </p>
+<p>-Số lượng đơn hàng tăng đột biến khiến việc xử lý đơn hàng bị chậm.
+    </p>
+    <p>
+        -Đối tác cung cấp hàng chậm hơn dự kiến khiến việc giao hàng bị chậm lại hoặc đối tác vận chuyển giao hàng bị chậm.
+       </p>
+    <p>  - Về phí vận chuyển, chúng tôi sử dụng dịch vụ vận chuyển ngoài nên cước phí vận chuyển sẽ được tính theo phí của các đơn vị vận chuyển tùy vào vị trí và khối lượng của đơn hàng, khi liên hệ lại xác nhận đơn hàng với khách sẽ báo mức phí cụ thể cho khách hàng.</p>
+    </p>
+
+    <div class="heading-page">
+        <h3 style="color: #0b0b0b">2.Thuận Tiện Trong Việc Mua Sắm  </h3>
+            </div>
+            <p>- Thuận tiên, đảm bảo hàng chính hãng 100% đến tay của khách hàng .</p>
+            <p>- Luôn cập nhật những mẫu sản phẩm mới nhất đến tay khách hàng .</p>
+            <p>- Giá thành ưu đãi ,nhiều chính sách tốt nhất cho khách hàng .</p>
+
+    <h3 style="color: #0b0b0b">3.Chính Sách Tích Điểm (xu)</h3>
+            <p>- Khi khách hàng mua đơn hàng đầu tiên khách hàng sẽ nhận được
+                 0.01% giá trị của đơn hàng sau khi đơn hàng hoàn thành ! </p>
+            <p>VD(*) Đơn Hàng trị giá :10.000.000VND = 100.000 Điểm Thành viên (xu)</p>
+
+            <p>- Điểm Thành Viên sẽ được áp dụng cho các hóa đơn cho khách hàng đã có tài khoản tại BeeStores.</p>
+            <p>
+                <strong>Lưu ý(*)</strong>  Sẽ không được vượt quá 50.000vnd cho một lần sử dụng điểm !
+            </p>
+            <!-- doi tra -->
+    <h3 style="color: #0b0b0b">4. Chính Sách Hoàn Trả </h3>
+            <div class="tab-editor-container ywtm_content_tab">
+                <p>
+              <span style="font-size: 100%; color: #000000"
+              ><strong>Dành cho những khách hàng :</strong>  Mua hàng online trên website BeeStore !</span
+              >
+                </p>
+
+
+                <p>
+              <span style="font-size: 100%"
+              ><span style="color: #000000"
+              ><strong
+              >+ Quy định ,Chính Sách  hoàn trả&nbsp;&nbsp;</strong
+              ></span
+              ><span style="color: #000000"
+              ></span
+              ></span
+              >
+                </p>
+                <p>
+
+                </p>
+                <p>
+              <span style="font-size: 100%; color: #000000"
+              >&nbsp; &nbsp; &nbsp; - Khách hàng được trả sản phẩm trong trường hợp có lỗi phát sinh từ nhà sản xuất hoặc là bên giao hàng
+              </span>
+                </p>
+                <p>
+              <span style="font-size: 100%; color: #000000"
+              >&nbsp; &nbsp; &nbsp; - Các trường hợp lỗi do nhà sản xuất gồm: Rách , trầy xước, mòn đế, phai màu, lỗi đường may</span
+              >
+                    <p>
+                    <span style="font-size: 100%; color: #000000"
+                    >&nbsp; &nbsp; &nbsp; - Các trường hợp lỗi do bên giao hàng :Móp méo,ẩm mốc,tráo hàng </span
+                    >
+                </p>
+                <p>
+              <span style="font-size: 100%; color: #000000"
+              >&nbsp; &nbsp; &nbsp; - Hoàn tiền lại sản phẩm gặp lỗi qua tài khoản ngân hàng.
+ BeeStore sẽ chịu trách nhiệm  100% về  chi phí vận chuyển trả lại hàng nếu  sản phẩm được xác định là lỗi sản phẩm.</span
+              >
+                </p>
+                <p>
+              <span style="font-size: 100%; color: #000000"
+              >&nbsp; &nbsp; &nbsp;- Xác minh lỗi nhanh chóng chỉ từ 01 ngày sau khi nhận được sản phẩm và sẽ liên hệ phản hồi trực tiếp lại với khách hàng.</span
+              >
+                </p>
+
+                <p>
+                <h3 style="color: #0b0b0b">5. Chính Sách Hoàn Tiền  </h3>
+                </p>
+                <ol>
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                ><strong>Quý khách lưu ý</strong></span
+                >
+                    </li>
+                </ol>
+                <ul>
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                >Đối với trường hợp thanh toán trước, khách hàng sẽ được hoàn tiền khi hàng nhận bị lỗi do sản xuất</span
+                >
+                    </li>
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                > Nhân Viên bên BeeStore sẽ liên hệ với khách hàng và sẽ hoàn tiền vào tài khoản cá nhân của khách hàng.</span
+                >
+                    </li>
+                </ul>
+                <ol start="2">
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                ><strong>Điều kiện đổi sản phẩm</strong></span
+                >
+                    </li>
+                </ol>
+                <ul>
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                >Trong vòng 10-15 ngày tính từ ngày mua sản phẩm.</span
+                >
+                    </li>
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                >Sản phẩm không có dấu hiệu đã qua sử dụng.</span
+                >
+                    </li>
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                >Sản phẩm không bị rách, trầy xước, hư hỏng, dính hoá chất
+                </span>
+                    </li>
+
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                >Hộp đựng, bao bì, đóng gói sản phẩm còn nguyên vẹn.</span
+                >
+                    </li>
+                </ul>
+                <ol start="3">
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                ><strong>Lưu ý</strong></span
+                >
+                    </li>
+                </ol>
+                <ul>
+
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                >Một đơn hàng chỉ được trả 1 lần </span
+                >
+                    </li>
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                >Mọi lỗi sẽ liên hệ với nhân viên để được tư vấn</span
+                >
+                    </li>
+                    <li>
+                <span style="font-size: 100%; color: #000000"
+                >Sản phẩm cần đổi còn mới 100% chưa qua sử dụng hoặc giặt tẩy,
+                nguyên phiếu bảo hành, tem nhãn sản phẩm, không bị dơ bẩn, trầy
+                xước, đầy đủ bao bì, túi hộp (nếu có)..</span
+                >
+                    </li>
+                </ul>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-section">
+    <div class="container relative">
+
+
+
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="subscription-form">
+                    <h3 class="d-flex align-items-center"><span class="me-1"><img src="../images/envelope-outline.svg"
+                                                                                  alt="Image"
+                                                                                  class="img-fluid"></span><span style="color: black" >Đăng ký nhận thông tin khuyến Mại</span>
+                    </h3>
+
+                    <form action="#" class="row g-3">
+                        <div class="col-auto">
+                            <input type="text" class="form-control" placeholder="Họ và tên">
+                        </div>
+                        <div class="col-auto">
+                            <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn">
+                                <span class="fa fa-paper-plane"></span>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+
+
+                <div id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8836968727605!2d105.74640787500061!3d21.03733908748429!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345515f14a641f%3A0xe7f2a647f98416cb!2sFPT%20Polytechnic!5e0!3m2!1sen!2s!4v1696820790226!5m2!1sen!2s" width="600" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><!-- End #map -->
+
+            </div>
+        </div>
+
+        <div class="row g-5 mb-5" style="color: black" >
+            <div class="col-lg-4">
+                <div style="color: black"  class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo" style="color: black" >BeeStore<span></span></a></div>
+                <p style="color: black" class="mb-4"> Hệ thống giày thể thao số 1 Hà Nội</p>
+
+
+            </div>
+
+            <div class="col-lg-8">
+                <div class="row links-wrap">
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="#">Dịch vụ</a></li>
+                            <li><a href="#">Thông tin</a></li>
+                            <li><a href="#">Trung tâm trợ giúp</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Vận chuyển</a></li>
+                            <li><a href="#">Khu vực</a></li>
+                            <li><a href="#">Kênh bán hàng</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Hướng dẫn mua hàng</a></li>
+                            <li><a href="#">Đội ngũ</a></li>
+                            <li><a href="#">Trả hàng</a></li>
+                            <li><a href="#">Bảo mật</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Chăm sóc khách hàng</a></li>
+                            <li><a href="#">Chính sách bảo hành</a></li>
+                            <li><a href="#">Hoàn tiền</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="border-top copyright">
+            <div class="row pt-4">
+                <div class="col-lg-6">
+                    <p class="mb-2 text-center text-lg-start">Chủ sở hữu &copy;
+                        <script>document.write(new Date().getFullYear());</script> &mdash;
+                        BEESTORE_SD01_SUM24
+
+                        <!-- License information: https://untree.co/license/ -->
+                    </p>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</footer>
+<!-- End Footer Section -->
+</body>
+</html>

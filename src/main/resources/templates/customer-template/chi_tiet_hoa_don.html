@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <meta name="author" content="Untree.co"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content="bootstrap, bootstrap4"/>
+
+    <!-- Bootstrap CSS -->
+    <link href="../..img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon"/>
+    <link href="/../css/customer/bootstrap.min.css" rel="stylesheet"/>
+
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+            rel="stylesheet"
+    />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'>
+
+    <style>
+        /* Đổi màu nền và màu chữ của các nút phân trang */
+        .pagination .page-link {
+            color: #000; /* Màu chữ đen */
+            background-color: #e9ecef; /* Nền xám nhạt */
+            border: 1px solid #c8cbcf; /* Viền màu xám nhạt */
+            border-radius: 0; /* Loại bỏ góc bo tròn */
+            margin: 0 2px; /* Điều chỉnh khoảng cách giữa các nút */
+            padding: 6px 12px; /* Điều chỉnh độ lớn của nút */
+        }
+
+        /* Đổi màu nền và màu chữ của nút khi được chọn hoặc hover */
+        .pagination .page-item.active .page-link,
+        .pagination .page-link:hover {
+            color: #000; /* Màu chữ đen khi hover hoặc nút được chọn */
+            background-color: #c8cbcf; /* Màu nền xám nhạt khi hover hoặc nút được chọn */
+            border: 1px solid #c8cbcf; /* Viền màu xám nhạt khi hover hoặc nút được chọn */
+        }
+
+        /* Table Styling */
+        #example {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            padding-top: 20px;
+        }
+
+        #example th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+            border-bottom: 1px solid black;
+            padding: 8px;
+            text-align: center;
+
+        }
+
+        #example td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            color: #6a6a6a;
+        }
+
+        #example tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        #example img {
+            vertical-align: middle;
+        }
+
+        /* Hide the footer */
+        tfoot[hidden] {
+            display: none;
+        }
+
+        /* Tùy chỉnh CSS để chuyển "Show entries" sang bên trái */
+        .dataTables_length {
+            float: left;
+        }
+
+        /* Di chuyển chuỗi "Showing x to y of N entries" sang bên trái */
+        .dataTables_info {
+            float: left;
+        }
+
+        .btn-link.no-border {
+            border: none;
+            box-shadow: none; /* Optional: Remove box shadow if there is any */
+            background-color: transparent; /* Optional: Set the background to transparent */
+            padding: 0; /* Optional: Remove padding to make the icon fit perfectly */
+        }
+
+    </style>    <!-- Google Web Fonts -->
+    <link href="/../css/customer/tiny-slider.css" rel="stylesheet"/>
+    <link href="/../css/customer/style.css" rel="stylesheet"/>
+    <title>
+        BeeStore
+    </title>
+    <link href="/../css/customer/tiny-slider.css" rel="stylesheet"/>
+    <link href="/../css/customer/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="./vendor/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/../css/customer/user/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/../css/customer/user/except-home-page.css"/>
+    <link rel="stylesheet" type="text/css" href="/../css/customer/user/account.css"/>
+    <link rel="stylesheet" type="text/css" href="/../css/customer/user/account-setting.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<<!-- Start Header/Navigation -->
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/beestore/trang-chu}">
+            <img style="height: 50px; width: 50px;"
+                 th:src="@{/img/e77e3572384e5c9af495d1acfbfa6f70.jpg}">
+            <a class="navbar-brand"
+               th:href="@{/beestore/trang-chu}">BeeStore</a></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="active">
+                    <a class="nav-link" th:href="@{/beestore/trang-chu}">Trang chủ</a>
+                </li>
+                <li><a class="nav-link" th:href="@{/beestore/cua-hang}">Cửa hàng</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/dichvu}">Dịch vụ</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/thongtin}">Thông tin</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/lienhe}">Liên hệ</a></li>
+
+
+            </ul>
+
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <li><a class="nav-link"  th:href="@{/beestore/cart}"><img src="/../images/cart.svg" style="padding-bottom: 5px"></a>
+                <li>
+                    <div class="dropdown show" style="padding-top: 5px">
+                        <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            <img src="/../images/user.svg">
+                        </a>
+                        <div th:if="${checkSecurity}">
+                            <!-- If checkSecurity is true, display the dropdown menu -->
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/admin/thongtincanhan'">Tài khoản </a>
+                                <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đơn mua</a>
+                                <a class="dropdown-item" th:href="'/logout'" >Đăng xuất</a>
+                            </div>
+                        </div>
+                        <div th:unless="${checkSecurity}">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đăng nhập</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                </li>
+                <style>
+                    /* Dropdown Button */
+                    /* Ẩn dropdown menu mặc định */
+                    .dropdown-menu {
+                        display: none;
+                        opacity: 0;
+                        position: absolute;
+                        top: 100%; /* Hiển thị menu bên dưới button */
+                        background-color: #fff; /* Màu nền của dropdown */
+                        transition: opacity 0.3s ease; /* Hiệu ứng mượt mà cho opacity */
+                    }
+
+                    /* Hiển thị dropdown menu khi hover vào .dropdown */
+                    .dropdown:hover .dropdown-menu {
+                        display: block;
+                        opacity: 1;
+                    }
+
+                    /* Hiệu ứng transition khi hiển thị dropdown */
+                    .dropdown-menu {
+                        transform: translateY(-10px); /* Di chuyển dropdown lên trên */
+                        transition: transform 0.3s ease, opacity 0.3s ease;
+                    }
+
+                    .dropdown:hover .dropdown-menu {
+                        transform: translateY(0); /* Đặt lại vị trí ban đầu */
+                    }
+
+                    .dropdown-toggle {
+                        cursor: pointer;
+                        padding: 0;
+                        border: none;
+                        background: transparent;
+                        outline: none;
+                        height: 100%; /* Đặt chiều cao của dropdown button là 100% */
+                    }
+
+                    /* Dropdown Menu */
+                    .dropdown-menu {
+                        width: auto;
+                        box-shadow: none;
+                    }
+
+                    /* Dropdown Items */
+                    .dropdown-item {
+                        display: block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        text-align: left;
+                    }
+
+                    /* Cart Icon */
+                </style>
+            </ul>
+
+        </div>
+    </div>
+
+</nav>
+
+<div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+        <div th:if="${not #strings.isEmpty(err)}" class="error-message">
+            <p class="alert alert-danger" th:text="${err}"></p>
+        </div>
+        <div th:if="${param.success}">
+            <div class="alert alert-info" id="success-alert">Thành công!</div>
+        </div>
+
+        <style>
+            .customer-info {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                border: 2px solid #f9f9f9; /* Border color */
+                border-radius: 8px; /* Rounded corners */
+                padding: 15px; /* Padding inside the border */
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle 3D effect */
+            }
+
+            .customer-info p {
+                margin: 0;
+                font-size: 16px; /* Adjust the font size as needed */
+            }
+
+            .customer-info p strong {
+                font-weight: bold;
+            }
+        </style>
+
+        <main>
+            <div class="main-content-wrapper container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="left-sidebar">
+                            <div class="break-line"></div>
+                            <div class="nav-sidebar">
+<!--                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
+                                <a class="selling-buying-products nav-item" th:href="'/admin/thongtincanhan'">Thông Tin Của
+                                    Tôi</a>
+                                <a class="account nav-item" th:href="'/beestore/hoa-don-cua-toi'">Đơn
+                                    Hàng Mua</a>
+
+                                <!--                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 main-content-wrapper">
+                        <div class="invoice-details">
+                            <div style="display: flex; align-items: flex-start;">
+
+                                <div style="flex: 1; padding-right: 15px;">
+                                    <h5>
+                                        <i class="fas fa-map-marker-alt"></i> Địa Chỉ Nhận Hàng
+                                    </h5>
+                                    <p><strong>Tên Khách Hàng:</strong> <span th:text="${hd.tenKhachHang}"></span></p>
+                                    <p><strong>Địa Chỉ Giao:</strong> <span th:text="${hd.diaChi}"></span></p>
+                                    <p><strong>Số Điện Thoại:</strong> <span th:text="${hd.sdt}"></span></p>
+                                </div>
+                                <div style="border-left: 1px solid #ccc; height: 100%; margin: 0 15px;"></div>
+
+                                <div style="flex: 1; padding-left: 15px;">
+                                    <h5>
+                                        <i class="fas fa-clipboard-list"></i> Thông Tin Đơn Hàng
+                                    </h5>
+                                    <p><strong>Ngày Đặt Hàng:</strong> <span th:text="${hd.ngayTao}"></span></p>
+                                    <p><strong>Trạng Thái:</strong> <span th:text="${hd.trangThai.getDisplayName()}"></span></p>
+                                    <p><strong>Ghi Chú Đơn Hàng:</strong> <span style="color: red" th:text="${hd.ghiChu}"></span></p>
+                                    <p><strong>Tổng Tiền:</strong> <span th:text="${#numbers.formatDecimal(hd.tongTien ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span></p>
+                                    <p><strong>Phí Vận Chuyển:</strong>
+                                        <span th:if="${hd.phiVanChuyen != null}" th:text="${#numbers.formatDecimal(hd.phiVanChuyen, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
+                                        <span th:if="${hd.phiVanChuyen == null}">0 VND</span>
+                                    </p>
+                                    <p><strong>Tiền Giảm Giá:</strong>
+                                        <span th:if="${hd.tienGiamGia != null}" th:text="${#numbers.formatDecimal(hd.tienGiamGia, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
+                                        <span th:if="${hd.tienGiamGia == null}">0 VND</span>
+                                    </p>
+                                    <p><strong>Tổng Tiền Thanh Toán:</strong>
+                                        <span style="color: red" th:text="${#numbers.formatDecimal(hd.thanhToan ?: 0, 0, 'POINT', 0, 'COMMA')} + ' VND'"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                <hr>
+
+                        <div class="row mb-5">
+                            <div class="site-blocks-table">
+
+                                <table id="example" class="table table-striped" style="width:100%">
+                                    <thead>
+                                    <tr>
+                                        <th>Ảnh</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Thao tác</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody th:each="gioHangChiTiet : ${gioHangChiTiets}">
+                                    <tr>
+                                        <td>
+                                            <img th:src="@{'/../images/' + ${gioHangChiTiet.chiTietSanPham.sanPham.anhChinh}}"
+                                                 style="width: 100px"
+                                                 alt="Image"
+                                                 class="img-fluid"
+                                            />
+                                        </td>
+                                        <td th:text="${gioHangChiTiet.chiTietSanPham.sanPham.ten}">
+                                        </td>
+                                        <td th:text="${#numbers.formatDecimal(gioHangChiTiet.chiTietSanPham.giaBan, 0, 'POINT', 0, 'COMMA')} + ' VND'"></td>
+                                        <td th:text="${gioHangChiTiet.soLuong}" id="currentQuantity"></td>
+                                        <td th:text="${#numbers.formatDecimal(gioHangChiTiet.donGia * gioHangChiTiet.soLuong, 0, 'POINT', 0, 'COMMA')} + ' VND'"></td>
+                                        <td>
+                                            <div th:if="${(gioHangChiTiet.trangThai == T(com.example.datnsum24sd01.enumation.TrangThai).YEU_CAU_TRA_HANG)
+                         or(gioHangChiTiet.trangThai == T(com.example.datnsum24sd01.enumation.TrangThai).DA_TRA_HANG)
+                         or(gioHangChiTiet.trangThai == T(com.example.datnsum24sd01.enumation.TrangThai).TU_CHOI_TRA_HANG)
+                         }"
+                                                 th:text="${gioHangChiTiet.trangThai.getDisplayName()}"></div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-outline-info btn-sm rounded-pill px-3 py-1 fw-bold shadow"
+                                                    data-bs-toggle="modal"
+                                                    th:data-bs-target="'#staticBackdrop' + ${gioHangChiTiet.id}"
+                                                    th:if="${(hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_GIAO)
+                    or (hd.trangThai == T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).XAC_NHAN_TRA_HANG)}"
+                                                    th:disabled="${gioHangChiTiet.trangThai == T(com.example.datnsum24sd01.enumation.TrangThai).YEU_CAU_TRA_HANG}">
+                                                <i class="fas fa-undo"></i> Yêu Cầu Trả Hàng/Hoàn Tiền
+                                            </button>
+<!--                                            <div class="modal fade" th:id="'staticBackdrop' + ${gioHangChiTiet.id}"-->
+<!--                                                 data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"-->
+<!--                                                 aria-labelledby="staticBackdropLabel" aria-hidden="true">-->
+<!--                                                <div class="modal-dialog">-->
+<!--                                                    <div class="modal-content">-->
+<!--                                                        <div class="modal-header">-->
+<!--                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Tình huống bạn đang gặp?</h1>-->
+
+<!--                                                        </div>-->
+<!--                                                        <style>-->
+<!--                                                            .image-preview {-->
+<!--                                                                display: flex;-->
+<!--                                                                flex-wrap: wrap;-->
+<!--                                                                gap: 10px;-->
+<!--                                                            }-->
+<!--                                                            .image-preview img {-->
+<!--                                                                max-width: 100px;-->
+<!--                                                                max-height: 100px;-->
+<!--                                                            }-->
+<!--                                                        </style>-->
+<!--                                                        <div class="modal-body">-->
+<!--                                                            <h3>Nêu rõ tình huống bạn đang gặp</h3>-->
+<!--                                                            <label> -Tôi đã nhận hàng nhưng không còn nhu cầu/hàng có vấn đề (bể vỡ, sai mẫu, lỗi, khác mô tả...) - Miễn ship hoàn về</label>-->
+<!--                                                           <label>-Tôi chưa nhận hàng/nhận thiếu hàng</label>-->
+<!--                                                           <label>-Sản Phẩm sai màu sắc, kích thước - Miễn ship hoàn về</label>-->
+<!--                                                            <form th:action="@{'/beestore/put/' + ${gioHangChiTiet.id} + '/' + ${hd.id}}"-->
+<!--                                                                  method="post" th:object="${newGhct}" class="my-form reduced-height"-->
+<!--                                                                  onsubmit="return confirmSubmit()" enctype="multipart/form-data">-->
+<!--                                                                <label class="form-label">Số Lượng Sản Phẩm</label>-->
+<!--                                                                <input type="number" min="1" class="form-control mb-3" th:field="*{soLuong}" id="soLuong"/>-->
+<!--                                                                <div id="quantityError" class="text-danger"></div>-->
+
+<!--                                                                <label class="form-label"> Chi Tiết Vấn Đề Bạn Gặp Phải ?</label>-->
+<!--                                                                <input type="text" class="form-control mb-3" name="ghiChu" th:field="*{ghiChu}"/>-->
+<!--                                                                <div id="customAlert" class="text-danger"></div>-->
+
+<!--                                                                &lt;!&ndash; New image upload field &ndash;&gt;-->
+<!--                                                                <label class="form-label">Tải lên hình ảnh sản phẩm (Chụp rõ nét sản phẩm nếu gặp vấn đề)</label>-->
+
+
+<!--                                                                <div class="tab-pane" id="images" role="tabpanel">-->
+
+
+<!--                                                                    <div class="row">-->
+<!--                                                                        <div class="col border m-3 p-2">-->
+<!--                                                                            <label>  Ảnh Sản Phẩm</label>-->
+<!--                                                                            <div>-->
+
+<!--                                                                                <label>-->
+<!--                                                                                    <ul id="imageList" style="list-style-type: none; display: flex; gap: 10px;"></ul>-->
+<!--                                                                                </label>-->
+<!--                                                                            </div>-->
+<!--                                                                        </div>-->
+<!--                                                                    </div>-->
+<!--                                                                    <input type="file" multiple id="hinhAnh" name="hinhAnh" onchange="previewImages(event)"-->
+<!--                                                                           accept="image/png,image/jpeg,img/jpg,img/jfif"/>-->
+<!--                                                                </div>-->
+
+<!--                                                                <div class="modal-footer" style="margin-left: 200px">-->
+<!--                                                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>-->
+<!--                                                                    <button type="submit" class="btn btn-primary">Xác Nhận</button>-->
+<!--                                                                </div>-->
+<!--                                                            </form>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                -->
+<!--                                            </div>-->
+
+
+
+
+                                                                                        <div class="modal fade" th:id="'staticBackdrop' + ${gioHangChiTiet.id}"
+                                                 data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Tình huống bạn đang gặp?</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h3>Nêu rõ tình huống bạn đang gặp</h3>
+                                                            <div class="mb-3">
+                                                                <label>- Tôi đã nhận hàng nhưng không còn nhu cầu/hàng có vấn đề (bể vỡ, sai mẫu, lỗi, khác mô tả...) - Miễn ship hoàn về</label><br>
+                                                                <label>- Tôi chưa nhận hàng/nhận thiếu hàng</label><br>
+                                                                <label>- Sản Phẩm sai màu sắc, kích thước - Miễn ship hoàn về</label>
+                                                            </div>
+                                                            <form th:action="@{'/beestore/put/' + ${gioHangChiTiet.id} + '/' + ${hd.id}}"
+                                                                  method="post" th:object="${newGhct}" class="my-form" onsubmit="return confirmSubmit()" enctype="multipart/form-data">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Số Lượng Sản Phẩm</label>
+                                                                    <input type="number" min="1" class="form-control" th:field="*{soLuong}" id="soLuong"/>
+                                                                    <div id="quantityError" class="text-danger"></div>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Chi Tiết Vấn Đề Bạn Gặp Phải?</label>
+                                                                    <input type="text" class="form-control" name="ghiChu" th:field="*{ghiChu}"/>
+                                                                    <div id="customAlert" class="text-danger"></div>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Tải lên hình ảnh sản phẩm (Chụp rõ nét sản phẩm nếu gặp vấn đề)</label>
+                                                                    <input type="file" multiple id="hinhAnh" name="hinhAnh" onchange="previewImages(event)"
+                                                                           accept="image/png,image/jpeg,image/jpg,image/jfif"/>
+                                                                    <div id="imagePreview" class="image-preview mt-3"></div>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                                    <button type="submit" class="btn btn-primary">Xác Nhận</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Script to preview images -->
+                                            <script>
+                                                function previewImages(event) {
+                                                    const imagePreviewContainer = document.getElementById('imagePreview');
+                                                    imagePreviewContainer.innerHTML = ''; // Clear existing previews
+
+                                                    for (const file of event.target.files) {
+                                                        if (file) {
+                                                            const reader = new FileReader();
+                                                            reader.onload = function(e) {
+                                                                const img = document.createElement('img');
+                                                                img.src = e.target.result;
+                                                                img.classList.add('img-thumbnail');
+                                                                img.style.maxWidth = '100px';
+                                                                img.style.maxHeight = '100px';
+                                                                imagePreviewContainer.appendChild(img);
+                                                            };
+                                                            reader.readAsDataURL(file);
+                                                        }
+                                                    }
+                                                }
+                                            </script>
+
+                                            <style>
+                                                .image-preview {
+                                                    display: flex;
+                                                    gap: 10px;
+                                                }
+                                                .img-thumbnail {
+                                                    border: 1px solid #ddd;
+                                                    border-radius: 4px;
+                                                    padding: 4px;
+                                                    background-color: #f8f9fa;
+                                                }
+                                            </style>
+
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot hidden="hidden">
+                                    <tr>
+                                        <th>Ảnh</th>
+                                        <th>Sản phẩm</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
+                                        <th>Thành tiền</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Thao tác</th>
+                                    </tfoot>
+                                </table>
+
+                                <div class="modal fade" th:id="'staticBackdrop3'"
+                                     data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Huỷ Đơn Hàng</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <!-- Inside the modal-body -->
+                                            <form th:action="@{/beestore/validation/deny}" method="post"
+                                                  class="my-form reduced-height">
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="id" th:value="${hd.id}"/>
+                                                    <label class="form-label">Lý do huỷ đơn hàng</label>
+                                                    <input type="text" class="form-control mb-3" name="ghiChu"
+                                                           th:value="${ghiChu}"/>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger"
+                                                            data-bs-dismiss="modal">Đóng
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary">Huỷ Đơn</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="button-container" >
+                                <button class="btn-link1"
+                                        data-bs-toggle="modal"
+                                        th:data-bs-target="'#staticBackdrop3'"
+                                        th:disabled="${hd.trangThai != T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).CHO_XAC_NHAN
+                     and hd.trangThai != T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DANG_CHUAN_BI}">
+                                    Huỷ Đơn Hàng
+                                </button>
+                                <form th:action="@{/beestore/validation}" method="post" class="my-form reduced-height">
+                                    <input type="hidden" name="id" th:value="${hd.id}" />
+                                    <button class="btn-link" type="submit"
+                                            data-bs-toggle="modal"
+                                            th:disabled="${hd.trangThai != T(com.example.datnsum24sd01.enumation.TrangThaiDonHang).DA_GIAO}"
+                                    >
+                                        Đã nhận được hàng
+                                    </button>
+                                </form>
+                            </div>
+
+                        </div>
+                        <style>
+                            .button-container {
+                                margin-top: 30px;
+                                /*margin-left: 60px;*/
+                                display: flex;
+                                align-items: center;
+                            }
+                            /* Các thuộc tính khác của nút */
+                            .btn-link {
+                                font-size: 16px;
+                                color: #3b5d50;
+                                text-decoration: none;
+                                border: 1px solid #3b5d50;
+                                padding: 8px 12px;
+                                background: none;
+                                border-radius: 10px;
+                                cursor: pointer;
+                                margin-left: 20px;
+                                transition: all 0.3s ease;
+                            }
+
+                            /* Hover effect */
+                            .btn-link:hover {
+                                background-color: #3b5d50;
+                                color: #fff;
+                            }
+
+                            .btn-link1 {
+                                font-size: 16px;
+                                color: #b1163b;
+                                text-decoration: none;
+                                border: 1px solid #bf1222;
+                                padding: 8px 12px;
+                                background: none;
+                                border-radius: 10px;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                            }
+
+                            .btn-link1:hover {
+                                background-color: #bf1222;
+                                color: #fff;
+                            }
+
+                        </style>
+                        <style>
+                            /* Remove underline from <a> tags within buttons in the nav-tabs */
+                            .nav-tabs button a {
+                                text-decoration: none;
+                            }
+
+                            /* Optional: Add styling for the buttons */
+                            .nav-tabs button {
+                                display: inline-block;
+                                padding: 10px 15px;
+                                margin-right: 10px;
+                                border: 1px solid #ccc;
+                                border-radius: 5px;
+                                background-color: #f8f8f8;
+                                color: #333;
+                                cursor: pointer;
+                            }
+
+                            /* Optional: Style the active state of the buttons */
+                            .nav-tabs button.active {
+                                background-color: white;
+                                color: #fff;
+                            }
+
+                            /* Optional: Add hover effect for buttons */
+                            .nav-tabs button:hover {
+                                background-color: #ddd;
+                            }
+
+                        </style>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+</div>
+<!-- Start Footer Section -->
+
+<footer class="footer-section">
+    <div class="container relative">
+
+
+
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="subscription-form">
+                    <h3 class="d-flex align-items-center"><span class="me-1"><img src="../images/envelope-outline.svg"
+                                                                                  alt="Image"
+                                                                                  class="img-fluid"></span><span style="color: black" >Đăng ký nhận thông tin khuyến Mại</span>
+                    </h3>
+
+                    <form action="#" class="row g-3">
+                        <div class="col-auto">
+                            <input type="text" class="form-control" placeholder="Họ và tên">
+                        </div>
+                        <div class="col-auto">
+                            <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn">
+                                <span class="fa fa-paper-plane"></span>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+
+
+                <div id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8836968727605!2d105.74640787500061!3d21.03733908748429!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345515f14a641f%3A0xe7f2a647f98416cb!2sFPT%20Polytechnic!5e0!3m2!1sen!2s!4v1696820790226!5m2!1sen!2s" width="600" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><!-- End #map -->
+
+            </div>
+        </div>
+
+        <div class="row g-5 mb-5" style="color: black" >
+            <div class="col-lg-4">
+                <div style="color: black"  class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo" style="color: black" >BeeStore<span></span></a></div>
+                <p style="color: black" class="mb-4"> Hệ thống giày thể thao số 1 Hà Nội</p>
+
+
+            </div>
+
+            <div class="col-lg-8">
+                <div class="row links-wrap">
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="#">Dịch vụ</a></li>
+                            <li><a href="#">Thông tin</a></li>
+                            <li><a href="#">Trung tâm trợ giúp</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Vận chuyển</a></li>
+                            <li><a href="#">Khu vực</a></li>
+                            <li><a href="#">Kênh bán hàng</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Hướng dẫn mua hàng</a></li>
+                            <li><a href="#">Đội ngũ</a></li>
+                            <li><a href="#">Trả hàng</a></li>
+                            <li><a href="#">Bảo mật</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Chăm sóc khách hàng</a></li>
+                            <li><a href="#">Chính sách bảo hành</a></li>
+                            <li><a href="#">Hoàn tiền</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="border-top copyright">
+            <div class="row pt-4">
+                <div class="col-lg-6">
+                    <p class="mb-2 text-center text-lg-start">Chủ sở hữu &copy;
+                        <script>document.write(new Date().getFullYear());</script> &mdash;
+                        BEESTORE_SD01_SUM24
+
+                        <!-- License information: https://untree.co/license/ -->
+                    </p>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<script>
+    new DataTable('#example');
+</script>
+<script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    })
+</script>
+<script src="/js/admin/index_form.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    })
+</script>
+<script src="/../js/customer/bootstrap.bundle.min.js"></script>
+<script src="/../js/customer/tiny-slider.js"></script>
+<script src="/../js/customer/custom.js"></script>
+<!--confirm xác nhận-->
+<script>
+    // Get the error message div
+    const errorMessage = document.querySelector('.error-message');
+
+    // Function to hide the error message after 5 seconds
+    setTimeout(function () {
+        errorMessage.style.display = 'none';
+    }, 5000); // 5000 milliseconds = 5 seconds
+    function confirmSubmit() {
+        if (confirm("Bạn Có Chắc Chắn Muốn Trả Hàng Không?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function confirmSubmit1() {
+        if (confirm("Bạn Có Chắc Chắn Muốn Đổi Hàng Không?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+</script>
+<!--<script>-->
+<!--    function previewImages() {-->
+<!--        var preview = document.getElementById('imagePreview');-->
+<!--        var files = document.getElementById('productImages').files;-->
+<!--        preview.innerHTML = '';-->
+
+<!--        if (files.length > 4) {-->
+<!--            alert("Chỉ được tải lên tối đa 4 ảnh");-->
+<!--            document.getElementById('productImages').value = '';-->
+<!--            return;-->
+<!--        }-->
+
+<!--        for (var i = 0; i < files.length; i++) {-->
+<!--            var file = files[i];-->
+
+<!--            if (file.type.match('image.*')) {-->
+<!--                var reader = new FileReader();-->
+
+<!--                reader.onload = (function(theFile) {-->
+<!--                    return function(e) {-->
+<!--                        var img = document.createElement('img');-->
+<!--                        img.src = e.target.result;-->
+<!--                        preview.appendChild(img);-->
+<!--                    };-->
+<!--                })(file);-->
+
+<!--                reader.readAsDataURL(file);-->
+<!--            }-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
+
+</body>
+</html>

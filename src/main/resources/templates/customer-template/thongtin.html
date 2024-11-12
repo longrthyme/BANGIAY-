@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{customer-template/fragments/fragment :: page_head}">
+</head>
+<body>
+
+<!-- Start Header/Navigation -->
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/beestore/trang-chu}">
+            <img th:src="@{/img/e77e3572384e5c9af495d1acfbfa6f70.jpg}"
+                 style="height: 50px; width: 50px;">
+
+            <a class="navbar-brand"
+
+               th:href="@{/beestore/trang-chu}">BeeStore<span></span></a></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="active">
+                    <a class="nav-link" th:href="@{/beestore/trang-chu}">Trang chủ</a>
+                </li>
+                <li><a class="nav-link" th:href="@{/beestore/cua-hang}">Cửa hàng</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/dichvu}">Dịch vụ</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/thongtin}">Thông tin</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/lienhe}">Liên hệ</a></li>
+
+
+            </ul>
+
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <li class="nav-item position-relative">
+                    <a class="nav-link" th:href="@{/beestore/cart}" title="View Cart">
+                        <img src="/../images/cart.svg" class="cart-icon" alt="Cart Icon">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                              th:if="${totalQuantity > 0}" th:text="${totalQuantity}">
+            0
+        </span>
+                    </a>
+                </li>
+                <div class="dropdown show" style="padding-top: 5px">
+                    <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        <img src="/../images/user.svg">
+                    </a>
+                    <div >
+                        <!-- If checkSecurity is true, display the dropdown menu -->
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" th:href="'/admin/thongtincanhan'">Tài khoản </a>
+                            <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đơn mua</a>
+                            <a class="dropdown-item" th:href="'/logout'" >Đăng xuất</a>
+                        </div>
+                    </div>
+               
+                </div>                </li>
+
+                </li>
+                <style>
+                    /* Dropdown Button */
+                    /* Ẩn dropdown menu mặc định */
+                    .dropdown-menu {
+                        display: none;
+                        opacity: 0;
+                        position: absolute;
+                        top: 100%; /* Hiển thị menu bên dưới button */
+                        background-color: #fff; /* Màu nền của dropdown */
+                        transition: opacity 0.3s ease; /* Hiệu ứng mượt mà cho opacity */
+                    }
+
+                    /* Hiển thị dropdown menu khi hover vào .dropdown */
+                    .dropdown:hover .dropdown-menu {
+                        display: block;
+                        opacity: 1;
+                    }
+
+                    /* Hiệu ứng transition khi hiển thị dropdown */
+                    .dropdown-menu {
+                        transform: translateY(-10px); /* Di chuyển dropdown lên trên */
+                        transition: transform 0.3s ease, opacity 0.3s ease;
+                    }
+
+                    .dropdown:hover .dropdown-menu {
+                        transform: translateY(0); /* Đặt lại vị trí ban đầu */
+                    }
+
+                    .dropdown-toggle {
+                        cursor: pointer;
+                        padding: 0;
+                        border: none;
+                        background: transparent;
+                        outline: none;
+                        height: 100%; /* Đặt chiều cao của dropdown button là 100% */
+                    }
+
+                    /* Dropdown Menu */
+                    .dropdown-menu {
+                        width: auto;
+                        box-shadow: none;
+                    }
+
+                    /* Dropdown Items */
+                    .dropdown-item {
+                        display: block;
+                        width: 100%;
+                        box-sizing: border-box;
+                        text-align: left;
+                    }
+
+                    /* Cart Icon */
+                </style>
+            </ul>
+
+        </div>
+    </div>
+
+</nav>
+
+<!-- Start Team Section -->
+<div class="untree_co-section">
+    <div class="container">
+
+        <div class="row mb-5">
+            <div class="col-lg-5 mx-auto text-center">
+                <h2 class="section-title">Đội ngũ BeeStore</h2>
+            </div>
+        </div>
+<p>Chặng đường tại Trường Cao đẳng thực hành FPT Polytechnic đã sắp khép lại. Chúng em xin trân thành cảm ơn tất cả các thầy cô giáo đã giúp đỡ chúng em trong quá trình rèn luyện và học tập tại trường.
+    Đặc biệt xin gửi lời cảm ơn đến thầy giáo Trần Tuấn Phong đã tận tình giúp đỡ, trực tiếp chỉ bảo, hướng dẫn nhóm SD-01 chúng em  trong suốt quá trình làm đồ án. Trong thời gian được học với thầy cô, chúng em không ngừng tiếp thu thêm nhiều kiến thức bổ ích mà còn học hỏi được tinh thần làm việc, thái độ làm việc nghiêm túc, hiệu quả, đây là những điều cần thiết cho chúng em trong quá trình công tác này.Một lần nữa Chúng em xin chân thành cảm ơn !
+</p>
+        <div class="row">
+
+            <!-- Start Column 1 -->
+            <div class="col-12 col-md-6 col-lg-2 mb-5 mb-md-0" style="text-align: center;">
+                <img src="../images/duong.jpg" style="border-radius: 50%; " class="img-fluid mb-5">
+                <h6 clas><a href="#"><span class="">Phạm Văn </span> Dương</a></h6>
+                <span class="d-block position mb-4">Trưởng Nhóm</span>
+
+            </div>
+            <!-- End Column 1 -->
+
+            <!-- Start Column 2 -->
+            <div class="col-12 col-md-6 col-lg-2 mb-5 mb-md-0" style="text-align: center;">
+                <img src="../images/" style="border-radius: 50%;" class="img-fluid mb-5">
+
+                <h6 clas><a href="#"><span class="">Đinh Tuấn </span> An</a></h6>
+                <span class="d-block position mb-4">Thành Viên</span>
+
+
+            </div>
+            <!-- End Column 2 -->
+<p></p>
+            <!-- Start Column 3 -->
+            <div class="col-12 col-md-6 col-lg-2 mb-5 mb-md-0" style="text-align: center;">
+                <img src="../images/" style="border-radius: 50%;" class="img-fluid mb-5">
+                <h6 clas><a href="#"><span class="">Dương Qúy</span> Dương</a></h6>
+                <span class="d-block position mb-4">Thành viên</span>
+
+            </div>
+            <!-- End Column 3 -->
+
+
+            <!-- Start Column 4 -->
+            <div class="col-12 col-md-6 col-lg-2 mb-5 mb-md-0" style="text-align: center;">
+                <img src="../images/" style="border-radius: 50%;" class="img-fluid mb-5">
+                <h6 clas><a href="#"><span class="">Nguyễn Hoàng</span> Anh</a></h6>
+                <span class="d-block position mb-4">Thành viên</span>
+
+            </div>
+            <!-- End Column 4 -->
+
+
+
+
+        </div>
+    </div>
+</div>
+<!-- End Team Section -->
+
+
+<footer class="footer-section">
+    <div class="container relative">
+
+
+
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="subscription-form">
+                    <h3 class="d-flex align-items-center"><span class="me-1"><img src="../images/envelope-outline.svg"
+                                                                                  alt="Image"
+                                                                                  class="img-fluid"></span><span style="color: black" >Đăng ký nhận thông tin khuyến Mại</span>
+                    </h3>
+
+                    <form action="#" class="row g-3">
+                        <div class="col-auto">
+                            <input type="text" class="form-control" placeholder="Họ và tên">
+                        </div>
+                        <div class="col-auto">
+                            <input type="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn">
+                                <span class="fa fa-paper-plane"></span>
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+
+
+                <div id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8836968727605!2d105.74640787500061!3d21.03733908748429!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345515f14a641f%3A0xe7f2a647f98416cb!2sFPT%20Polytechnic!5e0!3m2!1sen!2s!4v1696820790226!5m2!1sen!2s" width="600" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><!-- End #map -->
+
+            </div>
+        </div>
+
+        <div class="row g-5 mb-5" style="color: black" >
+            <div class="col-lg-4">
+                <div style="color: black"  class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo" style="color: black" >BeeStore<span></span></a></div>
+                <p style="color: black" class="mb-4"> Hệ thống giày thể thao số 1 Hà Nội</p>
+
+
+            </div>
+
+            <div class="col-lg-8">
+                <div class="row links-wrap">
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="#">Dịch vụ</a></li>
+                            <li><a href="#">Thông tin</a></li>
+                            <li><a href="#">Trung tâm trợ giúp</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Vận chuyển</a></li>
+                            <li><a href="#">Khu vực</a></li>
+                            <li><a href="#">Kênh bán hàng</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Hướng dẫn mua hàng</a></li>
+                            <li><a href="#">Đội ngũ</a></li>
+                            <li><a href="#">Trả hàng</a></li>
+                            <li><a href="#">Bảo mật</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-3">
+                        <ul class="list-unstyled">
+                            <li><a href="#">Chăm sóc khách hàng</a></li>
+                            <li><a href="#">Chính sách bảo hành</a></li>
+                            <li><a href="#">Hoàn tiền</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="border-top copyright">
+            <div class="row pt-4">
+                <div class="col-lg-6">
+                    <p class="mb-2 text-center text-lg-start">Chủ sở hữu &copy;
+                        <script>document.write(new Date().getFullYear());</script> &mdash;
+                        BEESTORE_SD01_SUM24
+
+                        <!-- License information: https://untree.co/license/ -->
+                    </p>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div>
+</footer>
+<!-- End Footer Section -->
+</body>
+</html>

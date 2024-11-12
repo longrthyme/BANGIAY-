@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>BeeStore Admin</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="/../../img/e77e3572384e5c9af495d1acfbfa6f70.jpg" rel="icon">
+    <!--thư viện css tích tìm kiếm-->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css'>
+    <style>
+        /* Đổi màu nền và màu chữ của các nút phân trang */
+        .pagination .page-link {
+            color: #000; /* Màu chữ đen */
+            background-color: #e9ecef; /* Nền xám nhạt */
+            border: 1px solid #c8cbcf; /* Viền màu xám nhạt */
+            border-radius: 0; /* Loại bỏ góc bo tròn */
+            margin: 0 2px; /* Điều chỉnh khoảng cách giữa các nút */
+            padding: 6px 12px; /* Điều chỉnh độ lớn của nút */
+        }
+
+        /* Đổi màu nền và màu chữ của nút khi được chọn hoặc hover */
+        .pagination .page-item.active .page-link,
+        .pagination .page-link:hover {
+            color: #000; /* Màu chữ đen khi hover hoặc nút được chọn */
+            background-color: #c8cbcf; /* Màu nền xám nhạt khi hover hoặc nút được chọn */
+            border: 1px solid #c8cbcf; /* Viền màu xám nhạt khi hover hoặc nút được chọn */
+        }
+
+        /* Table Styling */
+        #example {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            padding-top: 20px;
+        }
+
+        #example th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+            border-bottom: 1px solid black;
+            padding: 8px;
+            text-align: center;
+
+        }
+
+        #example td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            color: #6a6a6a;
+        }
+
+        #example tbody tr:hover {
+            background-color: #b3e1ff;
+        }
+
+        #example img {
+            vertical-align: middle;
+        }
+
+        /* Hide the footer */
+        tfoot[hidden] {
+            display: none;
+        }
+
+        /* hien thi icon them sửa xóa*/
+        .image-row {
+            display: flex; /* Sử dụng flexbox để xếp ảnh trên cùng một hàng */
+        }
+
+        .modal-body {
+            text-align: left;
+        }
+
+        /* Tùy chỉnh CSS để chuyển "Show entries" sang bên trái */
+        .dataTables_length {
+            float: left;
+        }
+
+        /* Di chuyển chuỗi "Showing x to y of N entries" sang bên trái */
+        .dataTables_info {
+            float: left;
+        }
+
+    </style>
+    <!--thư viện css tích tìm kiếm-->
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/../../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/../../lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/../../css/admin/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/../../css/admin/style.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container-xxl position-relative bg-white d-flex p-0">
+
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a th:href="@{/admin/ban-hang}" class="navbar-brand mx-4 mb-3">
+
+                <h3 style="color: orange"><i class="me-2"></i>BeeStore </h3>
+            </a>
+            <div class="d-flex align-items-center ms-4 mb-4">
+                <div class="position-relative">
+                    <img class="rounded-circle" th:src="@{/img/userNew.png}" alt="" style="width: 40px; height: 40px;">
+                    <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                    </div>
+                </div>
+                <div class="ms-3">
+                    <h6 class="mb-0" th:text="${tenNhanVien}"></h6>
+
+
+                </div>
+            </div>
+            <div class="navbar-nav w-100">
+                <a th:href="@{/admin/ban-hang}" class="nav-item nav-link"><i class="fa fa-laptop me-2"></i>Bán
+                    Hàng</a>
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-cube"></i> Quản Lý Sản Phẩm</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a th:href="@{/admin/san-pham}" class="dropdown-item">* Sản Phẩm</a>
+                        <a th:href="@{/admin/chi-tiet-san-pham}" class="dropdown-item">* Chi Tiết Sản
+                            Phẩm</a>
+                        <a th:href="@{/admin/nha-cung-cap}" class="dropdown-item">* Nhà Cung Cấp</a>
+                        <a th:href="@{/admin/dong-san-pham}" class="dropdown-item">* Dòng Sản Phẩm</a>
+
+                        <a th:href="@{/admin/thuong-hieu}" class="dropdown-item">* Thương Hiệu</a>
+                        <a th:href="@{/admin/mau-sac}" class="dropdown-item">* Màu Sắc</a>
+                        <a th:href="@{/admin/kich-thuoc}" class="dropdown-item"> * Kích Thước</a>
+                        <a th:href="@{/admin/de-giay}" class="dropdown-item">* Đế Giày</a>
+
+                    </div>
+                </div>
+                <a th:href="@{/admin/hoa-don}" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Hóa Đơn</a>
+
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            class="fa fa-cube"></i> Quản Lý Tài Khoản</a>
+                    <div class="dropdown-menu bg-transparent border-0">
+                        <a th:href="@{/admin/khach-hang}" class="dropdown-item"> * Tài Khoản Khách Hàng</a>
+                        <a th:href="@{/admin/nhan-vien}" class="dropdown-item">* Tài Khoản Nhân Viên</a>
+
+
+                    </div>
+                </div>
+
+
+                <a th:href="@{/admin/phieu-giam-gia}" class="nav-item nav-link"><i
+                        class="fa fa-eraser"></i>Phiếu Giảm Giá</a>
+                <a th:href="@{/admin/thong-ke}" class="nav-item nav-link"><i
+                        class="fa fa-chart-bar me-2"></i>Thống Kê</a>
+            </div>
+        </nav>
+    </div>
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+
+
+            <div class="navbar-nav align-items-center ms-auto">
+                <div class="fa fa-sign-out"></div>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="fa fa-bars"></i>
+
+
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                        <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid pt-4">
+            <div class="row g-2">
+                <div style="width: 90%;text-align: center">
+                    <h6 class="mb-4" style="font-size: 40px;">Quản Lý Khách Hàng</h6>
+                </div>
+
+
+            </div>
+            <div class="create" style="width: 20%;">
+                <button type="submit" class="btn btn-outline-primary mb-2">
+                    <a th:href="@{/admin/khach-hang/view-add}" style="color: darkgreen;">Thêm Khách Hàng</a>
+                </button>
+
+            </div>
+            <div class="container-fluid pt-2">
+                <div class="bg-light text-center ">
+                    <div>
+                        <div class="bg-light rounded ">
+                            <div class="row mb-3">
+                                <!-- Phần tìm kiếm và lọc -->
+                                <div class="col-md-10 d-flex justify-content-center align-items-center">
+                                    <form action="#" th:action="@{/admin/khach-hang}" method="get" class="d-flex w-100">
+                                        <input type="text" name="keyWord" class="form-control me-2" id="searchInput"
+                                               th:value="${keyWord}" placeholder="Nhập từ khóa..."
+                                               style="max-width: 300px;">
+
+                                        <!-- Dropdown lọc trạng thái -->
+                                        <select class="form-select me-2" id="statusFilter" name="status"
+                                                style="max-width: 200px;" onchange="this.form.submit()">
+                                            <option value="">Tất cả</option>
+                                            <option value="1" th:selected="${selectedStatus == '1'}">Hoạt động</option>
+                                            <option value="0" th:selected="${selectedStatus == '0'}">Không hoạt động
+                                            </option>
+                                        </select>
+
+                                        <!-- Nút tìm kiếm -->
+                                        <button type="submit" class="btn btn-outline-primary">Tìm kiếm</button>
+                                    </form>
+                                </div>
+
+                                <!-- Phần nút quay về -->
+                                <div class="col-md-2 d-flex justify-content-end align-items-center">
+                                    <a href="/admin/khach-hang" class="btn btn-outline-success">Quay về</a>
+                                </div>
+                            </div>
+
+
+                            <div class="bg-light text-center rounded ">
+                                <div>
+                                    <div class="bg-light rounded h-100 p-4">
+                                        <table id="example" class="table table-striped" >
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Mã Khách Hàng</th>
+                                    <th>Tên</th>
+                                    <th>Giới tính</th>
+                                    <th>Ngày sinh</th>
+                                    <th>SĐT</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="khachHang, stat : ${list}">
+                                    <td th:text="${stat.index + 1}"></td>
+                                    <td th:text="${khachHang.ma}">Mã</td>
+                                    <td th:text="${khachHang.ten}">Tên</td>
+                                    <td th:text="${khachHang.gioiTinh }">Giới tính</td>
+                                    <td th:text="${#dates.format(khachHang.ngaySinh, 'dd/MM/yyyy')}"></td>
+                                    <td th:text="${khachHang.sdt}">SĐT</td>
+                                    <td th:text="${khachHang.trangThai == 1 ? 'Hoạt Động' : 'KHông Hoạt Động'}">Trạng
+                                        Thái
+                                    </td>
+                                    <td>
+                                        <a class='fas fa-wrench' style='font-size:24px;color: green'  th:href="@{'/admin/khach-hang/view-update/' + ${khachHang.id}}"
+                                         >
+
+                                        </a>
+
+
+                                        <a class='far fa-trash-alt' style='font-size:24px;color:red' th:href="@{'/admin/khach-hang/delete/' + ${khachHang.id}}"
+
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa?')"> </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    new DataTable('#example');
+</script>
+<script src='https://code.jquery.com/jquery-3.7.0.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js'></script>
+<script src='https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js'></script>
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/../../lib/chart/chart.min.js"></script>
+<script src="/../../lib/easing/easing.min.js"></script>
+<script src="/../../lib/waypoints/waypoints.min.js"></script>
+<script src="/../../lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment.min.js"></script>
+<script src="/../../lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="/../../lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="/../../js/admin/main.js"></script>
+<script src="/../../js/admin/index_form.js"></script>
+
+
+</body>
+
+</html>

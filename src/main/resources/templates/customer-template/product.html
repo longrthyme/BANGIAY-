@@ -1,0 +1,663 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{customer-template/fragments/fragment :: page_head}">
+</head>
+<body>
+
+<!-- Start Header/Navigation -->
+<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/beestore/trang-chu}">
+            <img th:src="@{/img/e77e3572384e5c9af495d1acfbfa6f70.jpg}"
+                 style="height: 50px; width: 50px;">
+
+            <a class="navbar-brand"
+
+               th:href="@{/beestore/trang-chu}">BeeStore<span></span></a></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni"
+                aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsFurni">
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="active">
+                    <a class="nav-link" th:href="@{/beestore/trang-chu}">Trang chủ</a>
+                </li>
+                <li><a class="nav-link" th:href="@{/beestore/cua-hang}">Cửa hàng</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/dichvu}">Dịch vụ</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/thongtin}">Thông tin</a></li>
+                <li><a class="nav-link" th:href="@{/beestore/lienhe}">Liên hệ</a></li>
+
+
+            </ul>
+
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <li class="nav-item position-relative">
+                    <a class="nav-link" th:href="@{/beestore/cart}" title="View Cart">
+                        <img src="/../images/cart.svg" class="cart-icon" alt="Cart Icon">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                              th:if="${totalQuantity > 0}" th:text="${totalQuantity}">
+            0
+        </span>
+                    </a>
+                </li>
+                    <div class="dropdown show" style="padding-top: 5px">
+                        <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            <img src="/../images/user.svg">
+                        </a>
+                        <div >
+                            <!-- If checkSecurity is true, display the dropdown menu -->
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/admin/thongtincanhan'">Tài khoản </a>
+                                <a class="dropdown-item" th:href="'/beestore/hoa-don-cua-toi'">Đơn mua</a>
+                                <a class="dropdown-item" th:href="'/logout'" >Đăng xuất</a>
+                            </div>
+                        </div>
+                        <div >
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" th:href="'/beestore/login'">Đăng nhập</a>
+                            </div>
+                        </div>
+                    </div>                </li>
+
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+
+</nav>
+
+<div class="untree_co-section product-section before-footer-section">
+    <h1 style="color: #0c0e12; margin-left: 750px; font-family: 'Montserrat Medium'; display: flex; align-items: center;">
+        <i class="fas fa-box-open" style="margin-right: 10px;"></i> Sản Phẩm
+    </h1>
+
+    <div class="container">
+        <br>
+        <div class="productfinder">
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const productFinderDiv = document.querySelector('.scro');
+                    const errorMessage = document.querySelector('.error-message');
+                    const arr = document.querySelector('.arr');
+
+                    if (errorMessage) {
+                        arr.scrollIntoView({ behavior: 'smooth' });
+                    } else if (productFinderDiv) {
+                        productFinderDiv.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            </script>
+            <div class="pf-filter-item">
+
+                <form class="pf-controls" id="pf-Filters" >
+                    <h4 style="display: flex; align-items: center;">
+                        <i class="fas fa-filter" style="margin-right: 8px;"></i> Bộ Lọc Tìm Kiếm
+                    </h4>
+                    <fieldset class="filter-group pf-search">
+                        <input type="text" id="tenSanPham" name="tenSanPham" th:value="${tenSanPham}" class="powerText"
+                               placeholder="Tìm kiếm theo tên sản phẩm" style="width: 250px"/>
+                    </fieldset>
+                    <h4> Lọc giá</h4>
+                    <fieldset class="filter-group pf-search">
+                        <select class="form-select" aria-label="Default select example" name="sortField" id="sortField"
+                                style="font-size: medium;width: 250px">
+                            <option class="option">Chọn giá</option>
+                            <option class="option" th:value="sapXepTheoGiaBanCaoDenThap"
+                                    th:selected="${sortField == 'sapXepTheoGiaBanCaoDenThap'}">Giá cao đến thấp
+                            </option>
+                            <option class="option" th:value="sapXepTheoGiaBanThapDenCao"
+                                    th:selected="${sortField == 'sapXepTheoGiaBanThapDenCao'}">Giá thấp đến cao
+                            </option>
+                        </select></fieldset>
+                    <!-- Filter Section 1 -->
+                    <h4 class="filter-title" onclick="toggleFilter('filterOptions1', 'toggleIcon1')">
+                        Dòng Sản Phẩm
+                        <i class="fas fa-chevron-down toggle-icon" id="toggleIcon1"></i>
+                    </h4>
+                    <fieldset class="filter-group pf-checkboxes" id="filterOptions1" style="display: none; margin-top: 10px;">
+                        <div class="pf-checkbox" th:each="dongSp : ${dongSps}">
+                            <input type="checkbox" th:checked="${listDongSanPham.contains(dongSp.ten)}"
+                                   name="tenDongSanPham" id="tenDongSanPham" th:value="${dongSp.ten}" class="power"/>
+                            <label th:text="${dongSp.ten}"></label>
+                        </div>
+                    </fieldset>
+
+                    <!-- Additional filter sections -->
+                    <h4 class="filter-title" onclick="toggleFilter('filterOptions2', 'toggleIcon2')">
+                        Thương Hiệu
+                        <i class="fas fa-chevron-down toggle-icon" id="toggleIcon2"></i>
+                    </h4>
+                    <fieldset class="filter-group pf-checkboxes" id="filterOptions2" style="display: none; margin-top: 10px;">
+                        <div class="pf-checkbox" th:each="thuongHieu : ${thuongHieus}">
+                            <input type="checkbox" th:checked="${listThuongHieu.contains(thuongHieu.ten)}"
+                                   name="tenThuongHieu" id="tenThuongHieu" th:value="${thuongHieu.ten}" class="segment"/>
+                            <label th:text="${thuongHieu.ten}"></label>
+                        </div>
+                    </fieldset>
+
+                    <h4 class="filter-title" onclick="toggleFilter('filterOptions3', 'toggleIcon3')">
+                        Màu Sắc
+                        <i class="fas fa-chevron-down toggle-icon" id="toggleIcon3"></i>
+                    </h4>
+                    <fieldset class="filter-group pf-checkboxes" id="filterOptions3" style="display: none; margin-top: 10px;">
+                        <div class="pf-checkbox" th:each="mauSac : ${mauSacs}">
+                            <input type="checkbox" th:checked="${listMauSac.contains(mauSac.ten)}" name="tenMauSac"
+                                   id="tenMauSac" th:value="${mauSac.ten}" class="segment"/>
+                            <label th:text="${mauSac.ten}"></label>
+                        </div>
+                    </fieldset>
+
+                    <h4 class="filter-title" onclick="toggleFilter('filterOptions4', 'toggleIcon4')">
+                        Kích Cỡ
+                        <i class="fas fa-chevron-down toggle-icon" id="toggleIcon4"></i>
+                    </h4>
+                    <fieldset class="filter-group pf-checkboxes" id="filterOptions4" style="display: none; margin-top: 10px;">
+                        <div class="pf-checkbox" th:each="kichThuoc : ${kichThuocs}">
+                            <input type="checkbox" th:checked="${listKichThuoc.contains(kichThuoc.ten)}"
+                                   name="tenKichThuoc" id="tenKichThuoc" th:value="${kichThuoc.ten}" class="seating"/>
+                            <label th:text="${kichThuoc.ten}"></label>
+                        </div>
+                    </fieldset>
+
+                    <h4 class="filter-title" onclick="toggleFilter('filterOptions5', 'toggleIcon5')">
+                        Loại Đế
+                        <i class="fas fa-chevron-down toggle-icon" id="toggleIcon5"></i>
+                    </h4>
+                    <fieldset class="filter-group pf-checkboxes" id="filterOptions5" style="display: none; margin-top: 10px;">
+                        <div class="pf-checkbox" th:each="deGiay : ${deGiays}">
+                            <input type="checkbox" th:checked="${listDeGiay.contains(deGiay.ten)}" name="tenDeGiay"
+                                   id="tenDeGiay" th:value="${deGiay.ten}" class="power"/>
+                            <label th:text="${deGiay.ten}"></label>
+                        </div>
+                    </fieldset>
+
+                    <!-- CSS for styling all filter sections -->
+                    <style>
+                        .filter-title {
+                            display: flex;
+                            align-items: center;
+                            cursor: pointer;
+                            font-size: 1.2em; /* Adjust text size */
+                            margin-bottom: 10px;
+                        }
+
+                        .toggle-icon {
+                            margin-left: 8px;
+                            cursor: pointer;
+                            font-size: 0.8em; /* Smaller icon size */
+                            transition: transform 0.3s ease, color 0.3s ease;
+                            color: #666; /* Default color */
+                        }
+
+                        /* Hover effects for icons */
+                        .toggle-icon:hover {
+                            color: #000; /* Darker color on hover */
+                            transform: scale(1.1); /* Slight size increase on hover */
+                        }
+
+                        /* Rotate the icon when active */
+                        .fa-chevron-up {
+                            transform: rotate(180deg);
+                        }
+                    </style>
+
+                    <!-- JavaScript for toggling filters -->
+                    <script>
+                        function toggleFilter(filterId, iconId) {
+                            const filterOptions = document.getElementById(filterId);
+                            const toggleIcon = document.getElementById(iconId);
+
+                            // Toggle visibility of the filter options
+                            if (filterOptions.style.display === "none") {
+                                filterOptions.style.display = "block";
+                                toggleIcon.classList.remove('fa-chevron-down');
+                                toggleIcon.classList.add('fa-chevron-up');
+                            } else {
+                                filterOptions.style.display = "none";
+                                toggleIcon.classList.remove('fa-chevron-up');
+                                toggleIcon.classList.add('fa-chevron-down');
+                            }
+                        }
+                    </script>
+
+
+
+                    <style>
+                        h4 {
+                            margin-top: 20px;
+                        }
+
+                        .filter-group {
+                            border: 1px solid #ccc;
+                            padding: 10px;
+                            margin-bottom: 20px;
+                            max-height: 200px; /* Set the maximum height before a scrollbar appears */
+                            overflow-y: auto; /* Add vertical scrollbar if content overflows */
+                            border-bottom: 10px solid #701010; /* Thêm đường kẻ ngăn cách dưới */
+
+                        }
+
+                        .powerText {
+                            height: 40px; /* Điều chỉnh kích thước chiều rộng ở đây */
+                            margin-top: 15px;
+                            width: 200px;
+                        }
+
+                        .filter-group {
+                            border: 1px solid #ccc;
+                            padding: 10px;
+                            margin-bottom: 20px;
+                        }
+
+                        .filter-group h4 {
+                            margin-top: 0;
+                            font-size: 14px; /* Adjust the font size as needed */
+                        }
+
+                        .input-container {
+                            display: flex;
+                            flex-direction: column;
+                        }
+
+                        .input-container input[type="number"] {
+                            width: 150px; /* Adjust the width as needed */
+                            padding: 5px;
+                            margin: 5px;
+                            border: 1px solid #ddd;
+                            border-radius: 3px;
+                            font-size: 12px; /* Adjust the font size as needed */
+                        }
+
+                        /* Additional styling for the input:focus to highlight when it's active */
+                        .input-container input[type="number"]:focus {
+                            outline: none;
+                            border-color: #3498db;
+                            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+                        }
+
+                    </style>
+                    <script>
+                        var errorMessage = document.querySelector('.error-message');
+
+                        if (errorMessage) {
+                            setTimeout(function () {
+                                errorMessage.style.display = 'none';
+                            }, 10000);
+                        }
+                    </script>
+                    <div class="button-container">
+                        <a style="color: #0b0b0b" th:href="@{/beestore/cua-hang}" class="button-style" >
+                            <i></i> Xóa bộ lọc
+                        </a>
+                        <button style="color: #0b0b0b" class="button-style" type="submit">
+                            <i ></i> Lọc Sản Phẩm
+                        </button>
+                    </div>
+
+                    <style>
+                        .button-container {
+                            display: flex;
+                            align-items: center;
+                        }
+
+                        .button-style {
+                            font-weight: bold;
+                            height: 45px;
+                            display: flex;
+                            align-items: center;
+                            padding: 10px 20px;
+                            border: 1px solid #ccc;
+                            border-radius: 5px;
+                            text-decoration: none;
+                            color: #333;
+                            background-color: #b8afaf;
+                            font-size: 14px;
+                            margin-right: 20px;
+                        }
+
+                        .button-style:last-child {
+                            margin-right: 0;
+                        }
+                    </style>
+
+            </div>
+
+            <div class="pf-wrapper">
+                <div id="pf-Container" class="pf-container live-search-list row">
+                    <div class="col-md-4 col-sm-6 mb-4" th:each="ctsp : ${listCTSP}">
+                        <div class="product-item" style="border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px">
+<!--                            <a th:href="@{'/beestore/detaisp/' + ${ctsp.id}}" style="text-decoration: none">-->
+                            <a th:href="@{'/beestore/detaisp/' + ${ctsp.idSanPham}}" style="text-decoration: none">
+                                <img th:src="@{'../images/' + ${ctsp.anhChinh}}" class="img-fluid product-thumbnail"
+                                     style="border-radius: 8px; width: 100%; height: auto;" alt="Product Image">
+                                <h3 class="product-title" style="font-size: 18px; margin-top: 15px; color: #333;"
+                                    th:text="${ctsp.tenSanPham +' ['+ ctsp.tenDongSanPham +'- '+ ctsp.tenDeGiay +']'}"></h3>
+
+                                <!-- Display product price -->
+                                <div th:if="${ctsp.giaMacDinh == ctsp.giaBan}">
+                                    <strong class="product-price" style="font-size: 18px; color: #000;"
+                                            th:text="${#numbers.formatDecimal(ctsp.giaBan, 0, 'POINT', 0, 'COMMA') + ' VND'}"></strong>
+                                </div>
+
+                                <!-- Display discounted price if applicable -->
+                                <div th:if="${ctsp.giaMacDinh != ctsp.giaBan}">
+                                    <s class="old-price" style="font-size: 14px; color: #888;"
+                                       th:text="${#numbers.formatDecimal(ctsp.giaMacDinh, 0, 'POINT', 0, 'COMMA') + ' VND'}"></s>
+                                    <strong class="new-price" style="font-size: 18px; color: #bf1222; margin-left: 10px;"
+                                            th:text="${#numbers.formatDecimal(ctsp.giaBan, 0, 'POINT', 0, 'COMMA') + ' VND'}"></strong>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Optional CSS for hover and shadow effects -->
+            <style>
+                .product-item:hover {
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                }
+                .product-title:hover {
+                    color: #bf1222;
+                }
+            </style>
+            <br>
+
+            <div class="pagination-container" style="margin-left: 500px">
+                <div class="pagination">
+                    <button type="submit" class="page-item" name="page" value="0" th:disabled="${page == 0}">
+                        <i class="fas fa-angle-double-left"></i> <!-- Icon double left arrow -->
+                    </button>
+                    <button type="submit" class="page-item" name="page" th:disabled="${page <= 0}" th:value="${page - 1}">
+                        <i class="fas fa-angle-left"></i> <!-- Icon left arrow -->
+                    </button>
+                    <button type="submit" class="page-item" name="page" th:value="${totalPages - 1}" th:text="${page + 1}"></button>
+                    <button type="submit" class="page-item" name="page" th:disabled="${page >= totalPages - 1}" th:value="${page + 1}">
+                        <i class="fas fa-angle-right"></i> <!-- Icon right arrow -->
+                    </button>
+                    <button type="submit" class="page-item" th:disabled="${page >= totalPages - 1}" name="page" th:value="${totalPages - 1}">
+                        <i class="fas fa-angle-double-right"></i> <!-- Icon double right arrow -->
+                    </button>
+                    <input type="hidden" name="pageSize" th:value="${pageSize}" />
+                </div>
+            </div>
+            <style>
+
+
+
+                .page-item {
+                    padding: 8px 16px; /* Kích thước của nút */
+                    background-color: #f0f0f0; /* Màu nền */
+
+                    color: #333; /* Màu chữ */
+                    cursor: pointer;
+                    text-decoration: none;
+                    border-radius: 4px;
+                }
+
+
+<!--            </style>-->
+            </form>
+
+
+
+    </div>
+</div>
+
+    <p></p>
+
+    <footer class="footer-section">
+        <div class="container relative">
+
+
+
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="subscription-form">
+                        <h3 class="d-flex align-items-center"><span class="me-1"><img src="../images/envelope-outline.svg"
+                                                                                      alt="Image"
+                                                                                      class="img-fluid"></span><span style="color: black" >Đăng ký nhận thông tin khuyến Mại</span>
+                        </h3>
+
+                        <form action="#" class="row g-3">
+                            <div class="col-auto">
+                                <input type="text" class="form-control" placeholder="Họ và tên">
+                            </div>
+                            <div class="col-auto">
+                                <input type="email" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn">
+                                    <span class="fa fa-paper-plane"></span>
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="col-lg-6">
+
+
+                    <div id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.8836968727605!2d105.74640787500061!3d21.03733908748429!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31345515f14a641f%3A0xe7f2a647f98416cb!2sFPT%20Polytechnic!5e0!3m2!1sen!2s!4v1696820790226!5m2!1sen!2s" width="600" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><!-- End #map -->
+
+                </div>
+            </div>
+
+            <div class="row g-5 mb-5" style="color: black" >
+                <div class="col-lg-4">
+                    <div style="color: black"  class="mb-4 footer-logo-wrap"><a href="#" class="footer-logo" style="color: black" >BeeStore<span></span></a></div>
+                    <p style="color: black" class="mb-4"> Hệ thống giày thể thao số 1 Hà Nội</p>
+
+
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="row links-wrap">
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Liên hệ</a></li>
+                                <li><a href="#">Dịch vụ</a></li>
+                                <li><a href="#">Thông tin</a></li>
+                                <li><a href="#">Trung tâm trợ giúp</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Vận chuyển</a></li>
+                                <li><a href="#">Khu vực</a></li>
+                                <li><a href="#">Kênh bán hàng</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Hướng dẫn mua hàng</a></li>
+                                <li><a href="#">Đội ngũ</a></li>
+                                <li><a href="#">Trả hàng</a></li>
+                                <li><a href="#">Bảo mật</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <ul class="list-unstyled">
+                                <li><a href="#">Chăm sóc khách hàng</a></li>
+                                <li><a href="#">Chính sách bảo hành</a></li>
+                                <li><a href="#">Hoàn tiền</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-top copyright">
+                <div class="row pt-4">
+                    <div class="col-lg-6">
+                        <p class="mb-2 text-center text-lg-start">Chủ sở hữu &copy;
+                            <script>document.write(new Date().getFullYear());</script> &mdash;
+                            BEESTORE_SD01_SUM24
+
+                            <!-- License information: https://untree.co/license/ -->
+                        </p>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+    </footer>
+<style>
+    .product-title {
+        text-align: center;
+    }
+
+    .product-price {
+        text-align: right; /* Hoặc center, tùy vào thiết kế của bạn */
+    }
+    .product-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center; /* Hoặc left, tùy vào thiết kế của bạn */
+    }
+    .product-item {
+
+        padding: 20px;
+        width: 200px; /* Chiều rộng cố định */
+        height: 400px; /* Chiều cao cố định */
+        position: relative; /* Cho phép sử dụng top và left */
+
+        transition: transform 0.3s ease;
+    }
+
+    .product-thumbnail {
+        width: 200px;
+        height: 180px;
+        object-fit: cover; /* Hoặc contain, tùy vào thiết kế của bạn */
+    }
+    .product-item {
+        margin-bottom: 20px;
+    }
+
+    .product-title, .product-price {
+        margin: 10px 0;
+    }
+    .product-item:hover {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        transition: box-shadow 0.3s ease;
+        transform: scale(1.05);
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+
+    }
+    .pf-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Khoảng cách giữa các sản phẩm */
+    }
+    .productfinder {
+        width: 100%;
+        height: 100%;
+        padding: 0 30px;
+        margin-left: 3%;
+        display: table;
+    }
+
+    .productfinder > div {
+        display: table-cell;
+        float: left;
+    }
+
+    .productfinder h4 {
+        font-weight: 700;
+        margin-bottom: .5em;
+    }
+
+    .productfinder label {
+        font-weight: 300;
+    }
+
+
+    .productfinder button:focus {
+        outline: 0 none;
+    }
+
+    .productfinder .pf-controls {
+        padding: 2%;
+    }
+
+    .productfinder .filter-group {
+        display: block;
+        margin: 0 1em 0 0;
+        border: 0;
+        padding: .5em;
+    }
+
+
+    .productfinder .pf-filter-item {
+        width: 300px;
+    }
+
+    .productfinder .pf-wrapper {
+        width: calc(100% - 300px);
+    }
+
+    .productfinder .pf-container > div:not(.fail-message) {
+        width: calc(25% - 50px);
+        float: left;
+    }
+
+    .productfinder .pf-container {
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -ms-flex-wrap: wrap !important;
+        flex-wrap: wrap !important;
+        -ms-flex-line-pack: start !important;
+        align-content: flex-start !important;
+    }
+
+</style>
+
+    <script>
+    function formatCurrency(fieldId) {
+        let inputValue = document.getElementById(fieldId).value.replace(/\D/g, '');
+        let formattedValue = formatCurrencyValue(inputValue);
+        document.getElementById(fieldId).value = formattedValue;
+        document.getElementById(fieldId + "Value").value = inputValue;
+    }
+
+    function formatCurrencyValue(value) {
+        let integerValue = Number.parseFloat(value);
+        if (isNaN(integerValue)) {
+            return "0";
+        }
+        return integerValue.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    window.onload = function () {
+        let minGiaValue = document.getElementById("minGiaValue").value;
+        let maxGiaValue = document.getElementById("maxGiaValue").value;
+
+        // Set default values to 0 if hidden inputs are empty
+        document.getElementById("minGia").value = minGiaValue !== "" ? formatCurrencyValue(minGiaValue) : "0";
+        document.getElementById("maxGia").value = maxGiaValue !== "" ? formatCurrencyValue(maxGiaValue) : "0";
+    };
+
+
+
+
+</script>
+<!-- End Footer Section -->
+</body>
+</html>
